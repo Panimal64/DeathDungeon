@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DeathDungeon.Views.MonstersPage"
+              Title="{Binding Title}"
+             x:Name="BrowseItemsPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Clicked="AddItem_Clicked" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            
+            <Label Text="Monster List"></Label>
+            
+            <ListView x:Name="ItemsListView" 
+                ItemsSource="{Binding Dataset}"
+                VerticalOptions="FillAndExpand"
+                 HasUnevenRows="true"
+                 RefreshCommand="{Binding LoadItemsCommand}"
+                 IsPullToRefreshEnabled="true"
+                 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                 CachingStrategy="RecycleElement"
+                 ItemSelected="OnItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10">
+                                <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                                <Label Text="Monster Name:" FontSize="16" />
+                                <Label Text="{Binding Name}" 
+                                LineBreakMode="NoWrap" 
+                                Style="{DynamicResource ListItemTextStyle}" 
+                                FontSize="16" />
+                                </StackLayout>
+                                <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                                <Label Text="Level:" FontSize="16" />
+                                <Label Text="{Binding Level}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="13" />
+                                </StackLayout>
+                                <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                                <Label Text="Current Experience:" FontSize="16" />
+                                <Label Text="{Binding CurrentExperience}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="13" />
+                                </StackLayout>
+                                <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                                <Label Text="Maximum Health:" FontSize="16" />
+                                <Label Text="{Binding MaximumHealth}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="13" />
+                                </StackLayout>
+                                <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                                <Label Text="Current Health:" FontSize="16" />
+                                <Label Text="{Binding CurrentHealth}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="13" />
+                                </StackLayout>
+                                <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                                <Label Text="Attack:" FontSize="16" />
+                                <Label Text="{Binding Attack}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="13" />
+                                </StackLayout>
+                                <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                                <Label Text="Defense:" FontSize="16" />
+                                <Label Text="{Binding Defense}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="13" />
+                                </StackLayout>
+                                <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                                <Label Text="Speed:" FontSize="16" />
+                                <Label Text="{Binding Speed}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="13" />
+                                </StackLayout>
+                                <Label Text="Description:" FontSize="16" />
+                                <Label Text="{Binding Description}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="13" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

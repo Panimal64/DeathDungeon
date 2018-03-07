@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DeathDungeon.Views.MonsterPartyPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Continue" Clicked="Continue_Clicked" />
+
+      <!--  <ToolbarItem Text="Cancel" Clicked="Cancel_Clicked" />-->
+
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <StackLayout Spacing="5" Padding="5">
+            <Grid
+                        RowSpacing="1"
+                        ColumnSpacing="2"
+                        VerticalOptions="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="175"/>
+                </Grid.ColumnDefinitions>
+
+                <StackLayout Grid.Row="0" Grid.Column="0">
+                    <Label Text="Monster List"/>
+                    <ListView x:Name="MonsterListView"
+                      ItemsSource="{Binding Dataset}"
+                      VerticalOptions="Start"
+                      RefreshCommand="{Binding LoadItemsCommand}"
+                      IsPullToRefreshEnabled="True"
+                      IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                      CachingStrategy="RecycleElement"
+                      ItemSelected="MonsterItemSelected">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout>
+                                    <StackLayout  Orientation="Horizontal">
+                                        <Label Text="Name:" FontSize="10" />
+                                        <Label Text="{Binding Name}" 
+                                         LineBreakMode="CharacterWrap" 
+                                         Style="{DynamicResource ListItemTextStyle}" 
+                                         FontSize="10" />
+                                        
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Level:" FontSize="10" />
+                                        <Label Text="{Binding Level}" 
+                                         LineBreakMode="CharacterWrap"
+                                         Style="{DynamicResource ListItemDetailTextStyle}"
+                                         FontSize="10" />
+                                    </StackLayout>
+                                    </StackLayout>
+
+
+
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                </StackLayout>
+
+                <StackLayout Grid.Row="0" Grid.Column="1">
+                    <Label Text="Party List" />
+                    <ListView x:Name="PartyListView"
+                      ItemsSource="{Binding DatasetParty}"
+                      VerticalOptions="Start"
+                      RefreshCommand="{Binding LoadItemsCommand}"
+                      IsPullToRefreshEnabled="True"
+                     
+                       IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                      CachingStrategy="RecycleElement"
+                      ItemSelected="PartyItemSelected">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="Name:" FontSize="10" />
+                                        <Label Text="{Binding Name}" 
+                                LineBreakMode="CharacterWrap" 
+                                Style="{DynamicResource ListItemTextStyle}" 
+                                FontSize="10" />
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                        <Label Text="Level:" FontSize="10" />
+                                        <Label Text="{Binding Level}" 
+                                LineBreakMode="CharacterWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="10" />
+
+                                    </StackLayout>
+                                    </StackLayout>
+
+
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                </StackLayout>
+
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

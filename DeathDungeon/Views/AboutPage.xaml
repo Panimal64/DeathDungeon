@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DeathDungeon.Views.AboutPage"
+             xmlns:vm="clr-namespace:DeathDungeon.ViewModels;"
+             xmlns:documents="clr-namespace:Windows.UI.Xaml.Documents;assembly=Windows.Foundation.UniversalApiContract"
+             Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <vm:AboutViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout
+        Orientation="Vertical">
+
+        <StackLayout 
+            HorizontalOptions="Center" 
+            VerticalOptions="Start"
+            Orientation="Vertical"
+            >
+
+            <Image 
+            Source="d20.png" 
+            VerticalOptions="Center" 
+            HeightRequest="150"
+            HorizontalOptions="Fill"/>
+
+            <Label 
+            FontSize="Large"
+            Text="Death Dungeon"
+            VerticalOptions="Center" 
+            HorizontalOptions="CenterAndExpand" />
+
+            <Label 
+            FontSize="Medium"
+            Text="Mobile Development"
+            VerticalOptions="Center" 
+            HorizontalOptions="CenterAndExpand" />
+
+            <Label 
+            FontSize="Small"
+            Text="Drop Table Team"
+            VerticalOptions="Center" 
+            HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+
+        <StackLayout 
+                VerticalOptions="EndAndExpand"
+                HorizontalOptions="StartAndExpand" 
+                Orientation="Vertical"
+                >
+
+            <StackLayout
+                HorizontalOptions="Start"
+                Orientation="Horizontal">
+
+                <Label 
+                FontSize="Small"
+                Text="Use SQL DataStore"
+                HorizontalTextAlignment="Start"
+                HorizontalOptions="Start"
+                />
+
+                <Switch 
+                x:Name="SettingDataSource"
+                HorizontalOptions="Center"
+                Toggled="Switch_OnToggled"/>
+
+            </StackLayout>
+
+            <StackLayout
+                HorizontalOptions="Start"
+                Orientation="Horizontal">
+
+                <Label 
+                FontSize="Small"
+                Text="Retrieve items from online "
+                    HorizontalTextAlignment="Start"
+                    HorizontalOptions="Start"
+                />
+
+                <Button  
+                    Text="Get" 
+                    Clicked="GetItems_Command" 
+                    HorizontalOptions="Center"
+                    TextColor="Black" />
+            </StackLayout>
+
+            <StackLayout
+                HorizontalOptions="FillAndExpand"
+                Orientation="Horizontal">
+
+                <Label 
+                    FontSize="Small"
+                    Text="Server POST Items"
+                    HorizontalTextAlignment="Start"
+                    HorizontalOptions="Start"/>
+
+                <Button  
+                    Text="Get" 
+                    Clicked="GetItemsPost_Command" 
+                    HorizontalOptions="CenterAndExpand"
+                    TextColor="Black" />
+            </StackLayout>
+
+            <StackLayout
+                HorizontalOptions="Start"
+                Orientation="Horizontal">
+
+                <Label 
+                FontSize="Small"
+                Text="Clear Database"
+                    HorizontalTextAlignment="Start"
+                    HorizontalOptions="Start"
+                />
+
+                <Button  
+                    Text="Clear" 
+                    Clicked="ClearDatabase_Command" 
+                    HorizontalOptions="Center"
+                    TextColor="Black" />
+            </StackLayout>
+
+            <Grid
+                RowSpacing="1"
+                ColumnSpacing="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Label Text="Data Version" Grid.Row="0" Grid.Column="0" />
+                <Label Text="1" Grid.Row="0" Grid.Column="1" />
+                <Label Text="Code Version" Grid.Row="1" Grid.Column="0" />
+                <Label Text="2" Grid.Row="1" Grid.Column="1" />
+            </Grid>
+
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

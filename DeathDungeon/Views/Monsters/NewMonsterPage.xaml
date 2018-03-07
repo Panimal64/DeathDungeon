@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="DeathDungeon.Views.NewMonsterPage"
+		     Title="Add New Item">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save" Clicked="Save_Clicked" />
+        <ToolbarItem Text="Cancel" Clicked="Cancel_Clicked" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Spacing="20" Padding="15">
+
+                <Label Text="Monster Create Page" FontSize="Small" />
+                <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                <Label Text="Monster Name:" FontSize="Medium" />
+                <Entry Text="{Binding Data.Name}" FontSize="Small" />
+                </StackLayout>
+                <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                <Label Text="Level" FontSize="Medium" />
+                <Editor Text="{Binding Data.Level}" FontSize="Small" Margin="0" />
+                </StackLayout>
+                <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                <Label Text="Experience Given:" FontSize="Medium" />
+                <Editor Text="{Binding Data.CurrentExperience}" FontSize="Small" Margin="0" />
+                </StackLayout>
+                <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                <Label Text="Maximum Health:" FontSize="Medium" />
+                <Editor Text="{Binding Data.MaximumHealth}" FontSize="Small" Margin="0" />
+                </StackLayout>
+                <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                <Label Text="CurrentHealth:" FontSize="Medium" />
+                <Editor Text="{Binding Data.CurrentHealth}" FontSize="Small" Margin="0" />
+                </StackLayout>
+                <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                <Label Text="Attack:" FontSize="Medium" />
+                <Editor Text="{Binding Data.Attack}" FontSize="Small" Margin="0" />
+                </StackLayout>
+                <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                <Label Text="Defense:" FontSize="Medium" />
+                <Editor Text="{Binding Data.Defense}" FontSize="Small" Margin="0" />
+                </StackLayout>
+                <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                <Label Text="Speed:" FontSize="Medium" />
+                <Editor Text="{Binding Data.Speed}" FontSize="Small" Margin="0" />
+                </StackLayout>
+                <Label Text="Description:" FontSize="Medium" />
+                <Editor Text="{Binding Data.Description}" FontSize="Small" Margin="0" />
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

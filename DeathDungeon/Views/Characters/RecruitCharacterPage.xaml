@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DeathDungeon.Views.RecruitCharacterPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Recruit" Clicked="Recruit_Clicked" />
+        <ToolbarItem Text="Discharge" Clicked="Discharge_Clicked"/>
+        <ToolbarItem Text="Cancel" Clicked="Cancel_Clicked" />
+    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <StackLayout Spacing="20" Padding="15">
+
+            <Label Text="Character Recruit Page" FontSize="Small" />
+
+            <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                <Label Text="Name:" FontSize="Medium" />
+                <Label Text="{Binding Data.Name}" FontSize="Small"/>
+            </StackLayout>
+            <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                <Label Text="Class:" FontSize="Medium" />
+                <Label Text="{Binding Data.ClassName}" FontSize="Small"/>
+            </StackLayout>
+            <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                <Label Text="Level:" FontSize="Medium" />
+                <Label Text="{Binding Data.Level}" FontSize="Small"/>
+
+                <Label Text="Current Experience:" FontSize="Medium" />
+                <Label Text="{Binding Data.CurrentExperience}" FontSize="Small"/>
+            </StackLayout>
+            <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                <Label Text="Maximum Health:" FontSize="Medium" />
+                <Label Text="{Binding Data.MaximumHealth}" FontSize="Small"/>
+            </StackLayout>
+            <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                <Label Text="CurrentHealth:" FontSize="Medium" />
+                <Label Text="{Binding Data.CurrentHealth}" FontSize="Small"/>
+            </StackLayout>
+            <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                <Label Text="Attack:" FontSize="Medium" />
+                <Label Text="{Binding Data.Attack}" FontSize="Small"/>
+            </StackLayout>
+            <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                <Label Text="Defense:" FontSize="Medium" />
+                <Label Text="{Binding Data.Defense}" FontSize="Small"/>
+            </StackLayout>
+            <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                <Label Text="Speed:" FontSize="Medium" />
+                <Label Text="{Binding Data.Speed}" FontSize="Small"/>
+            </StackLayout>
+            <Label Text="Description:" FontSize="Medium" />
+            <Label Text="{Binding Data.Description}" FontSize="Small"/>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
