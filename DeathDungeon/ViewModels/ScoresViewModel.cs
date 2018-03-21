@@ -39,6 +39,7 @@ namespace DeathDungeon.ViewModels
             Dataset = new ObservableCollection<Score>();
             LoadDataCommand = new Command(async () => await ExecuteLoadDataCommand());
 
+            //____________________CRUD SUBS______________________________________________________
             MessagingCenter.Subscribe<DeleteScorePage, Score>(this, "DeleteData", async (obj, data) =>
             {
                 Dataset.Remove(data);
@@ -50,7 +51,11 @@ namespace DeathDungeon.ViewModels
                 Dataset.Add(data);
                 await DataStore.AddAsync_Score(data);
             });
-
+            MessagingCenter.Subscribe<EndGamePage, Score>(this, "AddData", async (obj, data) =>
+            {
+                Dataset.Add(data);
+                await DataStore.AddAsync_Score(data);
+            });
             MessagingCenter.Subscribe<EditScorePage, Score>(this, "EditData", async (obj, data) =>
             {
                 // Find the Score, then update it
@@ -67,7 +72,7 @@ namespace DeathDungeon.ViewModels
 
             });
         }
-
+        //_______________REFRESHER__________________________________________________________
         // Return True if a refresh is needed
         // It sets the refresh flag to false
         public bool NeedsRefresh()
@@ -86,7 +91,7 @@ namespace DeathDungeon.ViewModels
         {
             _needsRefresh = value;
         }
-
+        //_____________________EXECUTE VM____________________________________________________
         private async Task ExecuteLoadDataCommand()
         {
             if (IsBusy)
@@ -98,6 +103,13 @@ namespace DeathDungeon.ViewModels
             {
                 Dataset.Clear();
                 var dataset = await DataStore.GetAllAsync_Score(true);
+
+                dataset = dataset
+                    .OrderByDescending(a => a.ScoreTotal)
+                    .ThenBy(a => a.Round)
+                    .ThenBy(a => a.Turn)
+                    .ThenByDescending(a => a.MonsterSlainNumber)
+                    .ToList();
                 foreach (var data in dataset)
                 {
                     Dataset.Add(data);
@@ -114,5 +126,50 @@ namespace DeathDungeon.ViewModels
                 IsBusy = false;
             }
         }
+
+
+
+        // Call to database operation for delete
+        public async Task<bool> DeleteAsync(Score data)
+        {
+            Dataset.Remove(data);
+
+            await DataStore.DeleteAsync_Score(data);
+            return true;
+        }
+
+        // Call to database operation for add
+        public async Task<bool> AddAsync(Score data)
+        {
+            Dataset.Add(data);
+            await DataStore.AddAsync_Score(data);
+            return true;
+        }
+
+        // Call to database operation for update
+        public async Task<bool> UpdateAsync(Score data)
+        {
+            // Find the Score, then update it
+            var myData = Dataset.FirstOrDefault(arg => arg.Id == data.Id);
+            if (myData == null)
+            {
+                return false;
+            }
+
+            myData.Update(data);
+
+            _needsRefresh = true;
+            await DataStore.UpdateAsync_Score(data);
+            return true;
+        }
+
+        // Call to database to ensure most recent
+        public async Task<Score> GetAsync(string id)
+        {
+            var myData = await DataStore.GetAsync_Score(id);
+            return myData;
+        }
+
+        
     }
 }

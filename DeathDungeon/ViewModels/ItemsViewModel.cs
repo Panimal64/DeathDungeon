@@ -29,7 +29,7 @@ namespace DeathDungeon.ViewModels
         }
 
         public ObservableCollection<Item> Dataset { get; set; }
-        public Command LoadDataCommand { get; set; }
+        public Command LoadDataCommand { get; set; }       
 
         private bool _needsRefresh;
 
@@ -98,6 +98,16 @@ namespace DeathDungeon.ViewModels
             {
                 Dataset.Clear();
                 var dataset = await DataStore.GetAllAsync_Item(true);
+
+                // Example of how to sort the database output using a linq query.
+                //Sort the list
+                dataset = dataset
+                    .OrderBy(a => a.Name)
+                    .ThenBy(a => a.Location)
+                    .ThenBy(a => a.Attribute)
+                    .ThenByDescending(a => a.Value)
+                    .ToList();
+
                 foreach (var data in dataset)
                 {
                     Dataset.Add(data);
@@ -114,5 +124,81 @@ namespace DeathDungeon.ViewModels
                 IsBusy = false;
             }
         }
+        // From Mike's code ... change comments
+        // Takes an item string ID and looks it up and returns the item
+        // This is because the Items on a character are stores as strings of the GUID.  That way it can be saved to the DB.
+        public Item GetItem(string ItemID)
+        {
+            if (string.IsNullOrEmpty(ItemID))
+            {
+                return null;
+            }
+
+            Item myData = Dataset.FirstOrDefault(a => a.Id == ItemID);
+            if (myData == null)
+            {
+                return null;
+            }
+
+            return myData;
+        }
+        //from mikes code referneced 7 times to fill in items
+        //must enter random item generator
+        public string ChooseRandomItemString(ItemLocationEnum location, AttributeEnum attribute)
+        {
+            return null;
+        }
+
+        //from mikes code
+        #region DataOperations
+
+        public async Task<bool> AddAsync(Item data)
+        {
+            Dataset.Add(data);
+            var myReturn = await DataStore.AddAsync_Item(data);
+            return myReturn;
+        }
+
+        public async Task<bool> DeleteAsync(Item data)
+        {
+            Dataset.Remove(data);
+            var myReturn = await DataStore.DeleteAsync_Item(data);
+            return myReturn;
+        }
+
+        public async Task<bool> UpdateAsync(Item data)
+        {
+            // Find the Item, then update it
+            var myData = Dataset.FirstOrDefault(arg => arg.Id == data.Id);
+            if (myData == null)
+            {
+                return false;
+            }
+
+            myData.Update(data);
+            await DataStore.UpdateAsync_Item(myData);
+
+            _needsRefresh = true;
+
+            return true;
+        }
+
+        // Call to database to ensure most recent
+        public async Task<Item> GetAsync(string id)
+        {
+            var myData = await DataStore.GetAsync_Item(id);
+            return myData;
+        }
+
+        // Having this at the ViewModel, because it has the DataStore
+        // That allows the feature to work for both SQL and the MOCk datastores...
+        public async Task<bool> InsertUpdateAsync(Item data)
+        {
+            var myReturn = await DataStore.InsertUpdateAsync_Item(data);
+            return myReturn;
+        }
+
+        #endregion DataOperations
+
     }
 }

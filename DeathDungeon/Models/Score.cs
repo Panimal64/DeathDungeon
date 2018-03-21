@@ -52,13 +52,10 @@ namespace DeathDungeon.Models
         {
             GameDate = DateTime.Now;    // Set to be now by default.
             AutoBattle = false;         //assume user battle
-            CharacterAtDeathList = null;
-            MonstersKilledList = null;
-           
-            
+            MonsterSlainNumber = 0; 
             ItemsDroppedList = null;
             ExperienceGainedTotal = 0;
-            Round = 0;
+            Round = 1;
             Turn = 0;
         }
 

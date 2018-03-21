@@ -153,6 +153,7 @@ namespace DeathDungeon.Controllers
 
         }
 
+        //Convert JSON String to data
         private Item ConvertFromJson(JObject json)
         {
             var myData = new Item();

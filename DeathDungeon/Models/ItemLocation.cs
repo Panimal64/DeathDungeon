@@ -66,6 +66,7 @@ namespace DeathDungeon.Models
             {
                 var myList = Enum.GetNames(typeof(ItemLocationEnum)).ToList();
                 var myReturn = myList.Where(a =>
+                                                a.ToString() != ItemLocationEnum.undefined.ToString() &&
                                                 a.ToString() != ItemLocationEnum.Finger.ToString()
                                             ).ToList();
                 return myReturn;

@@ -12,7 +12,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
@@ -75,6 +75,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -103,11 +104,28 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="DeathDungeon.UWP_TemporaryKey.pfx" />
+    <Content Include="DeathDungeon.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="banditType.png" />
+    <Content Include="batType.png" />
+    <Content Include="blobType.png" />
+    <Content Include="ClericClass.png" />
     <Content Include="cyclops.png" />
     <Content Include="d20.png" />
+    <Content Include="deathdungeon1.png" />
+    <Content Include="demonType.png" />
+    <Content Include="dragonType.png" />
+    <Content Include="DruidClass.png" />
+    <Content Include="DungeonCave.jpg" />
+    <Content Include="ghostType.png" />
+    <Content Include="giantType.png" />
+    <Content Include="goblinType.png" />
+    <Content Include="GrassMap - Copy.jpg" />
     <Content Include="GrassMap.jpg" />
+    <Content Include="imgType.png" />
+    <Content Include="lichType.png" />
+    <Content Include="manbearpigType.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-100.png" />
     <Content Include="Assets\LockScreenLogo.scale-125.png" />
@@ -140,7 +158,17 @@
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="rabbitType.png" />
+    <Content Include="RangerClass.png" />
+    <Content Include="redbox.png" />
+    <Content Include="RogueClass.png" />
+    <Content Include="stonegolemType.png" />
+    <Content Include="succubusType.png" />
+    <Content Include="WarriorClass.png" />
+    <Content Include="wizard - Copy.png" />
     <Content Include="wizard.png" />
+    <Content Include="WizardClass.png" />
+    <Content Include="wolfType.png" />
     <Content Include="xamarin_logo.png" />
   </ItemGroup>
   <ItemGroup>

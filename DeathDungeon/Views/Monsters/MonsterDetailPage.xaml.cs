@@ -57,9 +57,6 @@ namespace DeathDungeon.Views
         {
             await Navigation.PopAsync();
         }
-        private async void Recruit_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new RecruitMonsterPage(_viewModel));
-        }
+       
     }
 }

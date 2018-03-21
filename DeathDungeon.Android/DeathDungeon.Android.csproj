@@ -15,7 +15,7 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
+    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,6 +26,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <BundleAssemblies>false</BundleAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -92,6 +95,80 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\xamarin_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\banditType.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\batType.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\blobType.png" />
+    <Content Include="Resources\drawable-hdpi\cyclops.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\demonType.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\dragonType.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ghostType.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\giantType.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\goblinType.png" />
+    <Content Include="Resources\drawable-hdpi\GrassMap.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\imgType.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\lichType.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\manbearpigType.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\rabbitType.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\stonegolemType.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\succubusType.png" />
+    <Content Include="Resources\drawable-hdpi\wizard.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\wolfType.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\banditType.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\batType.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\blobType.png" />
+    <Content Include="Resources\drawable-xhdpi\cyclops.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\dragonType.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ghostType.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\giantType.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\goblinType.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\demonType.png" />
+    <Content Include="Resources\drawable-xhdpi\GrassMap.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\imgType.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\lichType.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\manbearpigType.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\rabbitType.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\stonegolemType.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\succubusType.png" />
+    <Content Include="Resources\drawable-xhdpi\wizard.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\banditType.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\batType.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\blobType.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\wolfType.png" />
+    <Content Include="Resources\drawable-xxhdpi\cyclops.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\dragonType.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ghostType.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\giantType.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\goblinType.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\demonType.png" />
+    <Content Include="Resources\drawable-xxhdpi\GrassMap.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\imgType.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\lichType.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\manbearpigType.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\rabbitType.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\stonegolemType.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\succubusType.png" />
+    <Content Include="Resources\drawable-xxhdpi\wizard.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\wolfType.png" />
+    <AndroidResource Include="Resources\drawable\banditType.png" />
+    <AndroidResource Include="Resources\drawable\batType.png" />
+    <AndroidResource Include="Resources\drawable\blobType.png" />
+    <Content Include="Resources\drawable\cyclops.png" />
+    <AndroidResource Include="Resources\drawable\dragonType.png" />
+    <AndroidResource Include="Resources\drawable\ghostType.png" />
+    <AndroidResource Include="Resources\drawable\giantType.png" />
+    <AndroidResource Include="Resources\drawable\goblinType.png" />
+    <AndroidResource Include="Resources\drawable\demonType.png" />
+    <Content Include="Resources\drawable\GrassMap.jpg" />
+    <AndroidResource Include="Resources\drawable\imgType.png" />
+    <AndroidResource Include="Resources\drawable\lichType.png" />
+    <AndroidResource Include="Resources\drawable\manbearpigType.png" />
+    <AndroidResource Include="Resources\drawable\rabbitType.png" />
+    <AndroidResource Include="Resources\drawable\stonegolemType.png" />
+    <AndroidResource Include="Resources\drawable\succubusType.png" />
+    <Content Include="Resources\drawable\wizard.png" />
+    <AndroidResource Include="Resources\drawable\wolfType.png" />
   </ItemGroup>
   <Import Project="..\DeathDungeon\DeathDungeon.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

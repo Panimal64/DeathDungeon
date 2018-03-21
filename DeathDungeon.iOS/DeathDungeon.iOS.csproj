@@ -121,6 +121,28 @@
     <BundleResource Include="Resources\GrassMap%401x.jpg" />
     <BundleResource Include="Resources\GrassMap%402x.jpg" />
     <BundleResource Include="Resources\GrassMap%403x.jpg" />
+    <BundleResource Include="Resources\WizardClass%403x.png" />
+    <BundleResource Include="Resources\WizardClass%402x.png" />
+    <BundleResource Include="Resources\WizardClass%401x.png" />
+    <BundleResource Include="Resources\WarriorClass%403x.png" />
+    <BundleResource Include="Resources\WarriorClass%402x.png" />
+    <BundleResource Include="Resources\WarriorClass%401x.png" />
+    <BundleResource Include="Resources\RogueClass%403x.png" />
+    <BundleResource Include="Resources\RogueClass%402x.png" />
+    <BundleResource Include="Resources\RogueClass%401x.png" />
+    <BundleResource Include="Resources\RangerClass%403x.png" />
+    <BundleResource Include="Resources\RangerClass%402x.png" />
+    <BundleResource Include="Resources\RangerClass%401x.png" />
+    <BundleResource Include="Resources\DruidClass%403x.png" />
+    <BundleResource Include="Resources\DruidClass%402x.png" />
+    <BundleResource Include="Resources\DruidClass%401x.png" />
+    <BundleResource Include="Resources\ClericClass%403x.png" />
+    <BundleResource Include="Resources\ClericClass%402x.png" />
+    <BundleResource Include="Resources\ClericClass%401x.png" />
+    <BundleResource Include="Resources\DungeonCave.jpg" />
+    <BundleResource Include="Resources\DeathDungeon%402x.png" />
+    <BundleResource Include="Resources\DeathDungeon%403x.png" />
+    <BundleResource Include="Resources\DeathDungeon%401x.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -169,6 +191,141 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\xamarin_logo%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\banditType%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\banditType%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\banditType%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\batType%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\batType%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\batType%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\blobType%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\blobType%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\blobType%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\demonType%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\demonType%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\demonType%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\dragonType%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\dragonType%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\dragonType%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ghostType%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ghostType%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ghostType%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\giantType%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\giantType%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\giantType%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\goblinType%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\goblinType%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\goblinType%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\imgType%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\imgType%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\imgType%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\lichType%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\lichType%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\lichType%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\manbearpigType%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\manbearpigType%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\manbearpigType%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\rabbitType%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\rabbitType%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\rabbitType%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\stonegolemType%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\stonegolemType%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\stonegolemType%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\succubusType%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\succubusType%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\succubusType%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\wolfType%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\wolfType%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\wolfType%402x.png" />
   </ItemGroup>
   <Import Project="..\DeathDungeon\DeathDungeon.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

@@ -8,12 +8,16 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Edit" Clicked="Edit_Clicked" />
         <ToolbarItem Text="Delete" Clicked="Delete_Clicked" />
-        <ToolbarItem Text="Recruit" Clicked="Recruit_Clicked" />
         <ToolbarItem Text="Cancel" Clicked="Cancel_Clicked" />
     </ContentPage.ToolbarItems>
 
     <ScrollView>
     <StackLayout Spacing="20" Padding="15">
+            <Image Source="{Binding Data.EntityImage}"
+                                       WidthRequest="50"
+                                       HeightRequest="50" 
+                                       HorizontalOptions="Start"
+                                       VerticalOptions="Center"/>
 
             <Label Text="Monster Detail Page" FontSize="Small" />
             <StackLayout Grid.Row= "1" Orientation="Horizontal">

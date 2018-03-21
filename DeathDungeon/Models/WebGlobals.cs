@@ -3,9 +3,9 @@
     //Global Variables
     public static class WebGlobals
     {
-
+        //URL for Items Server
         public const string WebSiteAPIURL = "http://itemget.azurewebsites.net/API/";
-        // Fix the URL...
+       
 
         public const int ErrorResultCode = 1;
 

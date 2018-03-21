@@ -1252,24 +1252,32 @@
     ]
   },
   "packageFolders": {
-    "/Users/paragasa/.nuget/packages/": {}
+    "C:\\Users\\alana\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/paragasa/Projects/DeathDungeon/DeathDungeon.Android/DeathDungeon.Android.csproj",
+      "projectUniqueName": "C:\\Users\\alana\\source\\repos\\DeathDungeon\\DeathDungeon\\DeathDungeon.Android\\DeathDungeon.Android.csproj",
       "projectName": "DeathDungeon.Android",
-      "projectPath": "/Users/paragasa/Projects/DeathDungeon/DeathDungeon.Android/DeathDungeon.Android.csproj",
-      "packagesPath": "/Users/paragasa/.nuget/packages/",
-      "outputPath": "/Users/paragasa/Projects/DeathDungeon/DeathDungeon.Android/obj",
+      "projectPath": "C:\\Users\\alana\\source\\repos\\DeathDungeon\\DeathDungeon\\DeathDungeon.Android\\DeathDungeon.Android.csproj",
+      "packagesPath": "C:\\Users\\alana\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\alana\\source\\repos\\DeathDungeon\\DeathDungeon\\DeathDungeon.Android\\obj\\",
       "projectStyle": "PackageReference",
+      "skipContentFileWrite": true,
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\"
+      ],
       "configFilePaths": [
-        "/Users/paragasa/.config/NuGet/NuGet.Config"
+        "C:\\Users\\alana\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.Fallback.config"
       ],
       "originalTargetFrameworks": [
         "monoandroid80"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -1283,43 +1291,43 @@
         "dependencies": {
           "Microsoft.Net.Http": {
             "target": "Package",
-            "version": "2.2.29"
+            "version": "[2.2.29, )"
           },
           "Newtonsoft.Json": {
             "target": "Package",
-            "version": "11.0.1"
+            "version": "[11.0.1, )"
           },
           "System.Net.Http": {
             "target": "Package",
-            "version": "4.3.3"
-          },
-          "Xamarin.Forms": {
-            "target": "Package",
-            "version": "2.5.0.280555"
+            "version": "[4.3.3, )"
           },
           "Xamarin.Android.Support.Design": {
             "target": "Package",
-            "version": "26.1.0.1"
-          },
-          "Xamarin.Android.Support.v7.AppCompat": {
-            "target": "Package",
-            "version": "26.1.0.1"
+            "version": "[26.1.0.1, )"
           },
           "Xamarin.Android.Support.v4": {
             "target": "Package",
-            "version": "26.1.0.1"
+            "version": "[26.1.0.1, )"
+          },
+          "Xamarin.Android.Support.v7.AppCompat": {
+            "target": "Package",
+            "version": "[26.1.0.1, )"
           },
           "Xamarin.Android.Support.v7.CardView": {
             "target": "Package",
-            "version": "26.1.0.1"
+            "version": "[26.1.0.1, )"
           },
           "Xamarin.Android.Support.v7.MediaRouter": {
             "target": "Package",
-            "version": "26.1.0.1"
+            "version": "[26.1.0.1, )"
+          },
+          "Xamarin.Forms": {
+            "target": "Package",
+            "version": "[2.5.0.280555, )"
           },
           "sqlite-net-pcl": {
             "target": "Package",
-            "version": "1.4.118"
+            "version": "[1.4.118, )"
           }
         }
       }

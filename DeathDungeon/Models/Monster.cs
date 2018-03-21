@@ -1,22 +1,30 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Text;
 using SQLite;
-
+using DeathDungeon.ViewModels;
+using System.Threading.Tasks;
 namespace DeathDungeon.Models
 {
-    public class Monster:Attributes
+    public class Monster : Attributes
     {
         //---------------Variable-----------------------------------------------
-        //Amount of experience to give after being attack
-        //int ExperienceToGive{get; set;}
+        
 
-        //copied code //Change TODO
-        [PrimaryKey]
-        public string Id { get; set; } //ID for Monster
+        
+        public string ItemHolder { get; set; }
+  
 
         public string Description { get; set; } //set to remove later
 
+
+        public int monsterType{ get; set; }
+
+
+        public DiceRoll rand;
+
+        //method to update monster
         public void Update(Monster newData)
         {
             if (newData == null)
@@ -27,6 +35,7 @@ namespace DeathDungeon.Models
             // Update all the fields in the Data, except for the Id
             Name = newData.Name;
             Level = newData.Level;
+            monsterType = newData.monsterType;
             CurrentExperience = newData.CurrentExperience;
             MaximumHealth = newData.MaximumHealth;
             CurrentHealth = newData.CurrentHealth;
@@ -35,6 +44,9 @@ namespace DeathDungeon.Models
             Speed = newData.Speed;
             Description = newData.Description;
             Living = newData.Living;
+            EntityImage = newData.EntityImage; //add image test
+            CheckType(monsterType);
+            
         }
 
         //----------------------------------------------------------------------
@@ -42,54 +54,89 @@ namespace DeathDungeon.Models
         //---------------Constructor--------------------------------------------
         //Method to name moster and set stats
         public Monster(){
-            Name = "Default Monster";                       //Monster Name
-            MaximumHealth = 10;              //Monster total health
-            CurrentHealth = 10;       //Monster start health
-            CurrentExperience = 0;      //Monster experience to give
-            Speed = 0;                       //Monster speed
-            Attack = 0;                    //Monster attack
-            Defense = 0;                   //Monster defense
-            Level = 1;                       //Monster level
-            Living = true;
-        }
-        public Monster(string name, int health, int currentHealth,
-                       int experience, int speed, int attack, int defense,
-                       int level)
-        {
-            Name = name;                         //Monster Name
-            MaximumHealth = health;              //Monster total health
-            CurrentHealth = currentHealth;       //Monster start health
-            CurrentExperience = experience;      //Monster experience to give
-            Speed = speed;                       //Monster speed
-            Attack = attack;                     //Monster attack
-            Defense = defense;                   //Monster defense
-            Level = level;                       //Monster level
-            Living = true;
-        } 
-        //-----------------Death-----------------------------------------------
-        //Checks to see if monster is dead
-        public bool IsLiving()
-        {
-            if (Living)
-                return true;
-            else
-                return false;
+            Name = "Default Monster";       //Monster Name
+            MaximumHealth = 10;             //Monster total health
+            CurrentHealth = 10;             //Monster start health
+            CurrentExperience = 0;          //Monster experience to give
+            Speed = 0;                      //Monster speed
+            Attack = 0;                     //Monster attack
+            Defense = 0;                    //Monster defense
+            Level = 1;                      //Monster level
+            Description = "";               //Monster Description
+            Living = true;                  //Set living to true
+            monsterType = 0;                //Monster type enum
+            EntityImage = "Icon-60";        //test icon
+            //GrabItem();                   //fill monster with item
         }
 
-        //----------------------------------------------------------------------
+         //copy new monster
+        public Monster (Monster _monster){  
+           this.Name = _monster.Name;
+           this.Level = _monster.Level;
+           this.CurrentExperience = _monster.CurrentExperience;
+           this.MaximumHealth = _monster.MaximumHealth;
+           this.CurrentHealth = _monster.CurrentHealth;
+           this.Attack = _monster.Attack;
+           this.Defense = _monster.Defense;
+           this.Speed = _monster.Speed;
+           this.Description = _monster.Description;
+           this.Living = _monster.Living;
+           this.EntityImage = _monster.EntityImage;
+            //GrabItem();
+
+        }
+
+        //Check monster type
+        public Monster(int MonsterType) {
+            CheckType(MonsterType);
+        }
+
+        //Method to check monster type and set stats from converter
+        public void CheckType(int MonsterType)
+        {
+            MonsterConverter checkTyper = new MonsterConverter();
+            checkTyper.swapStats(MonsterType);
+            this.Name = checkTyper.Name;
+            this.MaximumHealth = checkTyper.MaximumHealth;
+            this.CurrentHealth = checkTyper.CurrentHealth;
+            this.CurrentExperience = checkTyper.CurrentExperience;
+            this.Level = checkTyper.Level;
+            this.Attack = checkTyper.Attack;
+            this.Speed = checkTyper.Speed;
+            this.Defense = checkTyper.Defense;
+            this.Description = checkTyper.Description;
+            this.EntityImage = checkTyper.MonsterImage;
+
+        }
 
         //----------------Items-------------------------------------------------
         //Does the monster have item to drop
-        public void HoldingItem()
+        public bool HoldingItem()
         {
-            //TODO
+            if(ItemHolder != null)
+            {
+                return true;
+            }
+            return false;
         }
 
         //Checks to see if monster is dead if so drop item into pool
-        public void DropItems()
+        public Item DropItems()
         {
-            //if (!IsLiving)
+            var myItem = ItemHolder;
+            if (!IsLiving())
+            {
+                return GetItem(myItem);
+            }
             //    put all items into pool
+            return null ;
+        }
+
+        //Get name of item
+        public Item GetItem(string itemString)
+        {
+            return ItemsViewModel.Instance.GetItem(itemString);
+
         }
         //----------------------------------------------------------------------
 
@@ -101,10 +148,8 @@ namespace DeathDungeon.Models
             //sets new HP to incoming attack dmg
             int newHealth = CurrentHealth - damage;
             CurrentHealth = newHealth;
-
-            
-           
-            //Set character to dead if HP drops to 0
+                                   
+            //Set monster to dead if HP drops to 0 and drop items
             if (CurrentHealth <= 0){
                 DropItems();
                 Living = false;
@@ -112,23 +157,96 @@ namespace DeathDungeon.Models
                 
         }
 
-
+        //Calculate experience to give based on damage done
         public int GivenExperience(int damage)
         {
+            decimal percentage;
 
-            decimal percentage = (((100.0M/CurrentHealth)* damage)/100.0M);
+            //Calculate percent of damage done
+            if (CurrentHealth != 0)
+            {
+                percentage = (((100.0M / CurrentHealth) * damage) / 100.0M);
+            }
+            else
+            {
+                percentage = 0;
+            }
+          
+            //Calculate experience to give based on damage percent and current experience
             decimal xp = CurrentExperience * percentage;
+
+            //Set experience to give to whole number
             int ExperienceToGive = (int)xp;
 
+            //If more damage done than experience to give (monster dies on attack)
             if(ExperienceToGive >= CurrentExperience)
             {
+                //Set's experience to give to current experience
                 ExperienceToGive = CurrentExperience;
             }
-
+            
+            //Reduces experience monster has to left to give
             CurrentExperience = CurrentExperience - ExperienceToGive;
+                       
+            //returns experience to give
             return ExperienceToGive;
-            //Checks the amount of experience to give
-        }
+         }
+
         //----------------------------------------------------------------------
+        public string FormatOutput()
+        {
+            var UniqueOutput = "None";
+            //get uniqueitem variable per mikes game version
+            var myUnique = ItemsViewModel.Instance.GetItem("UniqueItem");
+            if (myUnique != null)
+            {
+                UniqueOutput = myUnique.FormatOutput();
+            }
+
+            var myReturn = Name;
+            myReturn += " , " + Description;
+            myReturn += " , Level : " + Level.ToString();
+            //current experience should be updated to total experience
+            //at time of monster creation, must add new variable to monster
+            myReturn += " , Total Experience : " + CurrentExperience;
+            myReturn += " , Unique Item : " + UniqueOutput;
+
+            return myReturn;
+        }
+
+        public void GrabItem()
+        {
+             
+            string myVar="";
+            int x=0;
+            if (ItemsViewModel.Instance.Dataset.Count == 0)
+            {
+
+            }
+            else
+            {
+                Task.Delay(1000);
+                x = MonstersViewModel.Instance.randomMonster.Next(ItemsViewModel.Instance.Dataset.Count);
+                Debug.WriteLine("the rand value is "+ x);
+
+                myVar = ItemsViewModel.Instance.Dataset[x].Id;
+
+                ItemHolder = myVar;
+            }
+        }
+        public string MonsterDetailString()
+        {
+            var myvar = "{" + Name + ": " +
+                Description +
+                ", Attack: " + Attack.ToString() +
+                ", Defense: " + Defense.ToString() +
+                ", Speed: " + Speed.ToString() +
+                ", Max Health" + MaximumHealth.ToString() + "}";
+
+
+            return myvar;
+
+        }
     }
 }
+

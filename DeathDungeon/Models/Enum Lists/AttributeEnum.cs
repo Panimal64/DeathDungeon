@@ -27,6 +27,7 @@ namespace DeathDungeon.Models
         // The highest value health can go
         MaxHealth = 18,
     }
+
     // Helper functions for the AttribureList
     public static class AttributeList
     {

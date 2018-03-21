@@ -6,11 +6,8 @@ namespace DeathDungeon.Models
 {
     public class DiceRoll
     {
-        public enum Dice : uint
+        public enum Dice 
         {
-            //Used for Random character starting level (between 1 and 6)
-            D6 = 6,
-
             //Used for rolling for Health Increase
             D10 = 10,
 
@@ -18,15 +15,17 @@ namespace DeathDungeon.Models
             D20 = 20,
         };
 
+        //Hold random number
         Random rng;
 
+        //Set random number
         public DiceRoll()
         {
             rng = new Random();
         }
 
         //Default rolling method
-        private int DefaultRoll(uint dice)
+        private int DefaultRoll(int dice)
         {
             return 1 + rng.Next((int)dice);
         }
@@ -34,16 +33,17 @@ namespace DeathDungeon.Models
         //Used to roll with specific number of die faces
         public int Roll(Dice faces)
         {
-            return DefaultRoll((uint)faces);
+            return DefaultRoll((int)faces);
         }
-
-        //Used to roll x number of times of a die with x number of faces
-        public List<int> MultiRoll(Dice faces, uint number)
+       
+        //Used to roll a die with x number of faces, x number of times of
+        //EG Multiroll(D20, 5)
+        public List<int> MultiRoll(Dice faces, int number)
         {
             List<int> rolls = new List<int>();
             for (int i = 0; i < number; i++)
             {
-                rolls.Add(DefaultRoll((uint)faces));
+                rolls.Add(DefaultRoll((int)faces));
             }
             return rolls;
         }

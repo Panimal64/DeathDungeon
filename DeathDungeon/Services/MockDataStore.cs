@@ -29,18 +29,19 @@ namespace DeathDungeon.Services
         private List<Character> _characterDataset = new List<Character>();
         private List<Monster> _monsterDataset = new List<Monster>();
         private List<Score> _scoreDataset = new List<Score>();
-        private List<Character> _characterParty = new List<Character>();
+        
         private List<Item> _itemPool = new List<Item>();
-        private List<Monster> _monsterParty = new List<Monster>();
+
 
         private MockDataStore()
         {
             var mockItems = new List<Item>
             {
-                new Item { Id = Guid.NewGuid().ToString(), Name = "Sword of Truth", Description="On hit foes speak the truth or cry out in pain, typically the latter" },
-                new Item { Id = Guid.NewGuid().ToString(), Name = "Emperor's New Pants", Description="Only those who are truly worthy can see these." },
-                new Item { Id = Guid.NewGuid().ToString(), Name = "Golden Uggs", Description="So comfortable you don't care what anyone thinks of them" },
-             };
+                new Item { Id = Guid.NewGuid().ToString(), Name = "Sword of Truth", Description="On hit foes speak the truth or cry out in pain, typically the latter", Attribute= AttributeEnum.Attack, Location=ItemLocationEnum.PrimaryHand, Value = 5 , ImageURI="d20.png"},
+           
+                new Item { Id = Guid.NewGuid().ToString(), Name = "Golden Uggs", Description="So comfortable you don't care what anyone thinks of them" , Attribute= AttributeEnum.Speed, Location=ItemLocationEnum.Feet , Value = 5, ImageURI="d20.png" },
+
+            };
 
             foreach (var data in mockItems)
             {
@@ -49,57 +50,57 @@ namespace DeathDungeon.Services
 
             var mockCharacters = new List<Character>
             {
-                new Character { Id = Guid.NewGuid().ToString(), Name = "Warrior", classType = 2, Level = 1, CurrentExperience = 10, MaximumHealth = 10, CurrentHealth = 10,  
-                    Attack = 7, Defense = 7, Speed = 3,  Description ="This is an Character description.", ClassName = "Wizard" },
+                new Character { Id = Guid.NewGuid().ToString(), Name = "Warrior", classType = ClassEnum.Warrior, Level = 1, CurrentExperience = 0, MaximumHealth = 10, CurrentHealth = 10,  
+                    Attack = 7, Defense = 7, Speed = 3,  Description ="This is an Character description.", ClassName = "Warrior" , EntityImage = "WarriorClass.png" },
 
-                new Character { Id = Guid.NewGuid().ToString(), Name = "Wizard", classType = 3, Level = 2, CurrentExperience = 20, MaximumHealth = 20, CurrentHealth = 20,
-                    Attack = 7, Defense = 3, Speed = 7,  Description ="This is an Character description." , ClassName = "Rouge"},
+                new Character { Id = Guid.NewGuid().ToString(), Name = "Wizard", classType = ClassEnum.Wizard, Level = 1, CurrentExperience = 0, MaximumHealth = 10, CurrentHealth = 10,
+                    Attack = 7, Defense = 3, Speed = 2,  Description ="This is an Character description." , ClassName = "Wizard", EntityImage = "WizardClass.png" },
 
-                new Character { Id = Guid.NewGuid().ToString(), Name = "Cleric", classType = 5, Level = 3, CurrentExperience = 30, MaximumHealth = 30, CurrentHealth = 30,
-                    Attack = 3, Defense = 3, Speed = 7,  Description ="This is an Character description." , ClassName = "Ranger"},
+                new Character { Id = Guid.NewGuid().ToString(), Name = "Cleric", classType = ClassEnum.Cleric, Level = 1, CurrentExperience = 0, MaximumHealth = 10, CurrentHealth = 10,
+                    Attack = 3, Defense = 3, Speed = 5,  Description ="This is an Character description." , ClassName = "Cleric" , EntityImage = "ClericClass.png"},
 
-                 new Character { Id = Guid.NewGuid().ToString(), Name = "Rogue", classType = 2, Level = 1, CurrentExperience = 10, MaximumHealth = 10, CurrentHealth = 10,
-                    Attack = 7, Defense = 5, Speed = 5,  Description ="This is an Character description.", ClassName = "Wizard" },
+                 new Character { Id = Guid.NewGuid().ToString(), Name = "Rogue", classType = ClassEnum.Rogue, Level = 1, CurrentExperience = 0, MaximumHealth = 10, CurrentHealth = 10,
+                    Attack = 7, Defense = 5, Speed = 10,  Description ="This is an Character description.", ClassName = "Rogue" , EntityImage = "RogueClass.png" },
 
-                new Character { Id = Guid.NewGuid().ToString(), Name = "Ranger", classType = 3, Level = 2, CurrentExperience = 20, MaximumHealth = 20, CurrentHealth = 20,
-                    Attack = 7, Defense = 3, Speed = 7,  Description ="This is an Character description." , ClassName = "Rouge"},
+                new Character { Id = Guid.NewGuid().ToString(), Name = "Ranger", classType = ClassEnum.Ranger, Level = 1, CurrentExperience = 0, MaximumHealth = 10, CurrentHealth = 10,
+                    Attack = 7, Defense = 3, Speed = 10,  Description ="This is an Character description." , ClassName = "Ranger", EntityImage = "RangerClass.png"},
 
-                new Character { Id = Guid.NewGuid().ToString(), Name = "Druid", classType = 5, Level = 3, CurrentExperience = 30, MaximumHealth = 30, CurrentHealth = 30,
-                    Attack = 5, Defense = 5, Speed = 5,  Description ="This is an Character description." , ClassName = "Ranger"},
+                new Character { Id = Guid.NewGuid().ToString(), Name = "Druid", classType = ClassEnum.Druid, Level = 1, CurrentExperience = 0, MaximumHealth = 10, CurrentHealth = 10,
+                    Attack = 5, Defense = 5, Speed = 8,  Description ="This is an Character description." , ClassName = "Druid", EntityImage = "DruidClass.png"},
 
             };
 
             foreach (var data in mockCharacters)
             {
                 _characterDataset.Add(data);
-                _characterParty.Add(data);
+               
             }
 
             var mockMonsters = new List<Monster>
             {
                 new Monster { Id = Guid.NewGuid().ToString(), Name = "Bat", Level = 1, CurrentExperience = 10, MaximumHealth = 10, CurrentHealth = 10,
-                    Attack = 3, Defense = 7, Speed = 5, Description ="This is an Monster description." },
+                    Attack = 3, Defense = 7, Speed = 5, Description ="This is an Monster description." , EntityImage = "Cyclops.png"},
 
                 new Monster { Id = Guid.NewGuid().ToString(), Name = "Imp", Level = 2, CurrentExperience = 20, MaximumHealth = 20, CurrentHealth = 20,
-                    Attack = 4, Defense = 5, Speed = 5, Description ="This is an Monster description." },
+                    Attack = 4, Defense = 5, Speed = 5, Description ="This is an Monster description." , EntityImage ="Cyclops.png"},
 
                 new Monster { Id = Guid.NewGuid().ToString(), Name = "Goblin", Level = 3, CurrentExperience = 30, MaximumHealth = 30, CurrentHealth = 30,
-                    Attack = 5, Defense = 3, Speed = 7, Description ="This is an Monster description." },
+                    Attack = 5, Defense = 3, Speed = 7, Description ="This is an Monster description." ,EntityImage ="WizardClass.png"},
 
                 new Monster { Id = Guid.NewGuid().ToString(), Name = "Rabbit", Level = 1, CurrentExperience = 10, MaximumHealth = 10, CurrentHealth = 10,
-                    Attack = 2, Defense = 2, Speed = 10, Description ="This is an Monster description." },
+                    Attack = 2, Defense = 2, Speed = 10, Description ="This is an Monster description." ,EntityImage ="Cyclops.png" },
 
                 new Monster { Id = Guid.NewGuid().ToString(), Name = "Blob", Level = 2, CurrentExperience = 20, MaximumHealth = 20, CurrentHealth = 20,
-                    Attack = 7, Defense = 3, Speed = 5, Description ="This is an Monster description." },
+                    Attack = 7, Defense = 3, Speed = 5, Description ="This is an Monster description." ,EntityImage ="Cyclops.png"},
 
                 new Monster { Id = Guid.NewGuid().ToString(), Name = "Bandit", Level = 3, CurrentExperience = 30, MaximumHealth = 30, CurrentHealth = 30,
-                    Attack = 3, Defense = 3, Speed = 7, Description ="This is an Monster description." },
+                    Attack = 3, Defense = 3, Speed = 7, Description ="This is an Monster description.",EntityImage ="Cyclops.png" },
             };
 
             foreach (var data in mockMonsters)
             {
                 _monsterDataset.Add(data);
-                _monsterParty.Add(data);
+             
             }
 
             var mockScores = new List<Score>
@@ -118,6 +119,33 @@ namespace DeathDungeon.Services
         }
 
         // Item
+        public async Task<bool> InsertUpdateAsync_Item(Item data)
+        {
+
+            // Check to see if the item exist
+            var oldData = await GetAsync_Item(data.Id);
+            if (oldData == null)
+            {
+                // If it does not exist, add it to the DB
+                var InsertResult = await AddAsync_Item(data);
+                if (InsertResult)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            // Compare it, if different update in the DB
+            var UpdateResult = await UpdateAsync_Item(data);
+            if (UpdateResult)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        
         public async Task<bool> AddAsync_Item(Item data)
         {
             _itemDataset.Add(data);
@@ -182,7 +210,7 @@ namespace DeathDungeon.Services
         {
             var myData = _characterDataset.FirstOrDefault(arg => arg.Id == data.Id);
             _characterDataset.Remove(myData);
-            _characterParty.Remove(myData);
+//            _characterParty.Remove(myData);
 
             return await Task.FromResult(true);
         }
@@ -197,30 +225,7 @@ namespace DeathDungeon.Services
             return await Task.FromResult(_characterDataset);
         }
 
-        //character party
-
-        public async Task<bool> RecruitAsync_Character(Character data)
-        {
-            if (_characterParty.Count < 6)
-            {
-                _characterParty.Add(data);
-            }
-
-            return await Task.FromResult(true);
-        }
-        public async Task<bool> DeleteAsync_CharacterParty(Character data)
-        {
-            var myData = _characterDataset.FirstOrDefault(arg => arg.Id == data.Id);
-            _characterParty.Remove(myData);
-
-            return await Task.FromResult(true);
-        }
-
-        public async Task<IEnumerable<Character>> GetPartyAsync_Character(bool forceRefresh = false)
-        {
-            return await Task.FromResult(_characterParty);
-        }
-
+       
         //Monster
         public async Task<bool> AddAsync_Monster(Monster data)
         {
@@ -246,7 +251,6 @@ namespace DeathDungeon.Services
         {
             var myData = _monsterDataset.FirstOrDefault(arg => arg.Id == data.Id);
             _monsterDataset.Remove(myData);
-            _monsterParty.Remove(myData);
             return await Task.FromResult(true);
         }
 
@@ -260,29 +264,7 @@ namespace DeathDungeon.Services
             return await Task.FromResult(_monsterDataset);
         }
 
-        //Monster Party
-        public async Task<bool> RecruitAsync_Monster(Monster data)
-        {
-            if (_monsterParty.Count < 6)
-            {
-                _monsterParty.Add(data);
-            }
-
-            return await Task.FromResult(true);
-        }
-        public async Task<bool> DeleteAsync_MonsterParty(Monster data)
-        {
-            var myData = _monsterDataset.FirstOrDefault(arg => arg.Id == data.Id);
-            _monsterParty.Remove(myData);
-
-            return await Task.FromResult(true);
-        }
-
-        public async Task<IEnumerable<Monster>> GetPartyAsync_Monster(bool forceRefresh = false)
-        {
-            return await Task.FromResult(_monsterParty);
-        }
-
+        
         // Score
         public async Task<bool> AddAsync_Score(Score data)
         {

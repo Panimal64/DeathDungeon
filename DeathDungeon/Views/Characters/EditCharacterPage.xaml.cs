@@ -26,6 +26,8 @@ namespace DeathDungeon.Views
 
             // Set the data binding for the page
             BindingContext = _viewModel = viewModel;
+            ClassPicker.SelectedItem = Data.classType.ToString();
+
         }
 
 	    public async void Save_Clicked(object sender, EventArgs e)
@@ -46,5 +48,15 @@ namespace DeathDungeon.Views
         {
             await Navigation.PopAsync();
         }
+        void Level_OnStepperValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            LevelValue.Text = String.Format("{0}", e.NewValue);
+        }
+
+        // The stepper function for Value
+        //void Value_OnStepperValueChanged(object sender, ValueChangedEventArgs e)
+        //{
+        //    ValueValue.Text = String.Format("{0}", e.NewValue);
+        //}
     }
 }

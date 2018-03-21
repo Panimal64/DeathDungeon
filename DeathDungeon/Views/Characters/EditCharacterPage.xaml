@@ -2,65 +2,184 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DeathDungeon.Views.EditCharacterPage"		     
+             xmlns:local="using:DeathDungeon.Models"
              Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Save" Clicked="Save_Clicked" />
         <ToolbarItem Text="Cancel" Clicked="Cancel_Clicked" />
     </ContentPage.ToolbarItems>
-
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:StringEnumConverter x:Key="StringEnum"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Spacing="20" Padding="15">
 
                 <Label Text="Character Edit Page" FontSize="Small" />
-                <StackLayout Grid.Row= "1" Orientation="Horizontal">
-                    <Label Text="Character Name" FontSize="Medium" />
-                    <Entry Text="{Binding Data.Name}" FontSize="Small" />
-                </StackLayout>
-                <Label Text=" Type Class Option 1-6" FontSize="Medium" />
-                <!-- undefined = 0,
-                    Warrior = 1,
-                    Wizard = 2,
-                    Rogue = 3,
-                    Cleric = 4,
-                    Ranger = 5,
-                    Druid = 6-->
-                <StackLayout Grid.Row= "1" Orientation="Horizontal">
-                    <Label Text="Class:" FontSize="Medium" />
-                    <Entry Text="{Binding Data.classType}" FontSize="Small" Margin="0" />
-                </StackLayout>
-                <StackLayout Grid.Row= "1" Orientation="Horizontal">
-                    <Label Text="Level:" FontSize="Medium" />
-                    <Editor Text="{Binding Data.Level}" FontSize="Small" Margin="0" />
-                </StackLayout>
-                <StackLayout Grid.Row= "1" Orientation="Horizontal">
-                    <Label Text="Current Experience:" FontSize="Medium" />
-                    <Editor Text="{Binding Data.CurrentExperience}" FontSize="Small" Margin="0" />
-                </StackLayout>
-                <StackLayout Grid.Row= "1" Orientation="Horizontal">
-                    <Label Text="Maximum Health:" FontSize="Medium" />
-                    <Editor Text="{Binding Data.MaximumHealth}" FontSize="Small" Margin="0" />
-                </StackLayout>
-                <StackLayout Grid.Row= "1" Orientation="Horizontal">
+               
+                <!--<Image Source="{Binding Data.ImageURI}"
+                WidthRequest="75"
+                HeightRequest="75" 
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>-->
+                
+                
+                <Grid
+                    RowSpacing="1"
+                    ColumnSpacing="2"
+                    VerticalOptions="Center">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackLayout Grid.Row="0" Grid.Column="0">
+                        <Label 
+                            Text="Name" 
+                            FontSize="Medium" 
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"/>
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="0" Grid.Column="1">
+                        <Entry 
+                            Text="{Binding Data.Name}" 
+                            FontSize="Small" 
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="Center"/>
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="1" Grid.Column="0">
+                        <Label 
+                            Text="Description" 
+                            FontSize="Medium" 
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"/>
+                    </StackLayout>
+                    <StackLayout Grid.Row="1" Grid.Column="1">
+                        <Entry 
+                            Text="{Binding Data.Description}" 
+                            FontSize="Small" 
+                            Margin="0" 
+                            VerticalOptions="Center"/>
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="2" Grid.Column="0">
+                        <Label 
+                            Text="Class" 
+                            FontSize="Medium" 
+                            HorizontalOptions="Start"/>
+                    </StackLayout>
+                    <StackLayout Grid.Row="2" Grid.Column="1"  >
+                        
+                        <Picker
+                            ItemsSource="{x:Static local:ClassList.GetListClass}"
+                            SelectedItem="{Binding Data.classType, Converter={StaticResource StringEnum}, Mode=TwoWay}"
+                            x:Name="ClassPicker"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="Center"/>
+                    </StackLayout>
+                    <StackLayout Grid.Row="3" Grid.Column="0">
+                        <Label Text="Level:" FontSize="Medium" 
+                               HorizontalOptions="Start"
+                            />    
+                    </StackLayout>
+                    <StackLayout Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                        <Label 
+                            Text="{Binding Data.Level}" 
+                            FontSize="Medium" 
+                            HorizontalOptions="Start"
+                            x:Name="LevelValue"
+                            VerticalOptions="Center"/>
+
+                        <Stepper 
+                            Value="{Binding Data.Level, Mode=TwoWay}"
+                            Minimum="0"
+                            Maximum="20"
+                            Increment="1"
+                            ValueChanged="Level_OnStepperValueChanged"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"/>
+                    </StackLayout>
+                    
+                    <StackLayout Grid.Row="4" Grid.Column="0">
+                    
+                        <Label Text="Current XP:"
+                               FontSize="Medium" 
+                               HorizontalOptions="Start" />
+
+                    </StackLayout>
+                    
+                    <StackLayout Grid.Row="4" Grid.Column="1">
+
+                        <Entry Text="{Binding Data.CurrentExperience}" FontSize="Small" Margin="0" />
+                    </StackLayout>
+                    
+                    <StackLayout Grid.Row="5" Grid.Column="0">
+
+                        <Label Text="Maximum Health:" FontSize="Medium" />
+                    </StackLayout>
+                   
+                    <StackLayout Grid.Row="5" Grid.Column="1">
+                         <Entry Text="{Binding Data.MaximumHealth}" FontSize="Small" Margin="0" />
+                    </StackLayout>
+                   
+                    <StackLayout Grid.Row="6" Grid.Column="0">
+
                     <Label Text="Current Health:" FontSize="Medium" />
-                    <Editor Text="{Binding Data.CurrentHealth}" FontSize="Small" Margin="0" />
-                </StackLayout>
-                <StackLayout Grid.Row= "1" Orientation="Horizontal">
-                    <Label Text="Attack:" FontSize="Medium" />
-                    <Editor Text="{Binding Data.Attack}" FontSize="Small" Margin="0" />
-                </StackLayout>
-                <StackLayout Grid.Row= "1" Orientation="Horizontal">
-                    <Label Text="Defense:" FontSize="Medium" />
-                    <Editor Text="{Binding Data.Defense}" FontSize="Small" Margin="0" />
-                </StackLayout>
-                <StackLayout Grid.Row= "1" Orientation="Horizontal">
-                    <Label Text="Speed:" FontSize="Medium" />
-                    <Editor Text="{Binding Data.Speed}" FontSize="Small" Margin="0" />
-                </StackLayout>
-                <Label Text="Description:" FontSize="Medium" />
-                <Editor Text="{Binding Data.Description}" FontSize="Small" Margin="0" />
-            </StackLayout>
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="6" Grid.Column="1">
+                      <Entry Text="{Binding Data.CurrentHealth}" FontSize="Small" Margin="0" />
+                     </StackLayout>
+                   
+                    <StackLayout Grid.Row="7" Grid.Column="0">
+
+                         <Label Text="Current Speed:" FontSize="Medium" />
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="7" Grid.Column="1">
+                          <Entry Text="{Binding Data.Speed}" FontSize="Small" Margin="0" />
+                     </StackLayout>
+                        
+                    <StackLayout Grid.Row="8" Grid.Column="0">
+
+                       <Label Text="Current Attack:" FontSize="Medium" />
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="8" Grid.Column="1">
+                          <Entry Text="{Binding Data.Attack}" FontSize="Small" Margin="0" />
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="9" Grid.Column="0">
+
+                      <Label Text="Current Defense:" FontSize="Medium" />
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="9" Grid.Column="1">
+                        <Entry Text="{Binding Data.Defense}" FontSize="Small" Margin="0" />
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="10" Grid.Column="0">
+
+                        <Label Text="Current Description:" FontSize="Medium" />
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="10" Grid.Column="1">
+                        <Entry Text="{Binding Data.Description}" FontSize="Small" Margin="0" VerticalOptions="Center"/>
+                    </StackLayout>
+
+                   
+                </Grid>
+            </StackLayout>         
         </ScrollView>
     </ContentPage.Content>
 

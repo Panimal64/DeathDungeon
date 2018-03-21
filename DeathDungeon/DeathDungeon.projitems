@@ -24,9 +24,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\DiceRoll.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Entity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Enum Lists\AttributeEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\GlobalVariables.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Enum Lists\MonsterType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Leveling.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Item.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Monster.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\MonsterConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Round.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Score.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\VersionGlobals.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\WebGlobals.cs" />
@@ -40,11 +44,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BattleViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CharacterDetailViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CharacterPartyViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CharactersViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ItemDetailViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ItemDropViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ItemsViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MonsterPartyViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MonstersDetailViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MonstersViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ScoreDetailViewModel.cs" />
@@ -69,10 +72,6 @@
       <DependentUpon>ItemDropPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\Battle\MonsterPartyPage.xaml.cs">
-      <DependentUpon>MonsterPartyPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\Battle\OpeningPage.xaml.cs">
       <DependentUpon>OpeningPage.xaml</DependentUpon>
     </Compile>
@@ -90,10 +89,6 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\Characters\NewCharacterPage.xaml.cs">
       <DependentUpon>NewCharacterPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\Characters\RecruitCharacterPage.xaml.cs">
-      <DependentUpon>RecruitCharacterPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\Items\DeleteItemPage.xaml.cs">
       <DependentUpon>DeleteItemPage.xaml</DependentUpon>
@@ -133,13 +128,8 @@
       <DependentUpon>NewMonsterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Models\Enum Lists\Class.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Enum Lists\Location.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BattleClass.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ItemLocation.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\Monsters\RecruitMonsterPage.xaml.cs">
-      <DependentUpon>RecruitMonsterPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\Scores\DeleteScorePage.xaml.cs">
       <DependentUpon>DeleteScorePage.xaml</DependentUpon>
     </Compile>
@@ -268,25 +258,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Battle\MonsterPartyPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Battle\CharacterPartyPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Characters\RecruitCharacterPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Monsters\RecruitMonsterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

@@ -44,7 +44,6 @@ namespace DeathDungeon.Views
             BindingContext = _viewModel;
         }
 
-
         public async void Edit_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new EditCharacterPage(_viewModel));
@@ -59,11 +58,7 @@ namespace DeathDungeon.Views
         {
             await Navigation.PopAsync();
         }
-        private async void Recruit_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new RecruitCharacterPage(_viewModel));
-        }
-
+        
 
     }
 }

@@ -25,6 +25,11 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Padding="10">
+                                <Image Source="{Binding EntityImage}"
+                                       WidthRequest="50"
+                                       HeightRequest="50" 
+                                       HorizontalOptions="Start"
+                                       VerticalOptions="Center"/>
                                 <StackLayout Grid.Row= "1" Orientation="Horizontal">
                                 <Label Text="Monster Name:" FontSize="16" />
                                 <Label Text="{Binding Name}" 

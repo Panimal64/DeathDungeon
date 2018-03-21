@@ -97,6 +97,15 @@ namespace DeathDungeon.Models
             ImageURI = newData.ImageURI;
             Range = newData.Range;
         }
+        public string ItemDetailString()
+        {
+            var myVar ="{" + Name + ": " +
+                Description + ", " +
+                Location.ToString() + ", " +
+                Attribute.ToString() + " +" +
+                Value.ToString() + "}";
+            return myVar;
+        }
     }
 }
 
