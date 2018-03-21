@@ -2,64 +2,76 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DeathDungeon.Views.BattlePage"
-           >
+            BackgroundColor="Black">
     <ContentPage.Content>
-    <ScrollView>
-      
-        <StackLayout>
-                
+        <ScrollView>
+           
+            <StackLayout>
+                <StackLayout>
+                    <Grid HeightRequest="25"  BackgroundColor="Black">
+                        <StackLayout Grid.Column="0"   BackgroundColor="Black">
+                            <Label x:Name="Round"  FontAttributes="Bold" TextColor="Red" BackgroundColor="Black" Text="Round" IsVisible="True" HorizontalOptions="Start" VerticalOptions="Center" FontSize="10"  />
+                            <Label x:Name="RoundNum" FontAttributes="Bold" TextColor="Red"  BackgroundColor="Black"  Text="1" IsVisible="True" HorizontalOptions="Start" VerticalOptions="Center" FontSize="10"  />
 
-                 <Grid  x:Name= "ContentPanel" VerticalOptions="FillAndExpand"
-                  HorizontalOptions="FillAndExpand"  >
-                    
+                        </StackLayout>
+                        <StackLayout Grid.Column="1"   BackgroundColor="Black">
+                            <Label x:Name="OutputCharacter" TextColor="White"  BackgroundColor="Black" 
+                                   Text="{Binding MessageCharacter}" IsVisible="{Binding characterOutput}"
+                                   HorizontalOptions="Start" VerticalOptions= "Start" FontSize="10"  />
+                            <Label x:Name="OutputMonster" TextColor="White"  BackgroundColor="Black" 
+                                   Text="{Binding MessageMonster}" IsVisible="{Binding monsterOutput}" 
+                                   HorizontalOptions="Start" VerticalOptions="Start" FontSize="10"  />
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
 
-                    <Image HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFill" 
-                    Source="GrassMap.jpg" Grid.Row="0" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="2"/>
+                <Grid  x:Name= "ContentPanel" VerticalOptions="Fill"
+                  HorizontalOptions="Fill" HeightRequest="500" WidthRequest="500" 
+                        BackgroundColor="Transparent">
+
+
 
                     <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    
-              
-                    
-                </Grid>
-                
-            <Label Text="Battle Page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            <Button Text="Refresh"
-                    Clicked="Refresh_Clicked"/>
-            <Button Text="Character Attack"
-                    Clicked="CharacterFight_Clicked"/>
-                <Button Text="Monster Attack"
-                    Clicked="MonsterFight_Clicked"/>
+                    <Image HorizontalOptions="Fill" VerticalOptions="Fill" Aspect="Fill" 
+                    Source="DungeonCave.jpg" Grid.Row="0" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="2"
+                           BackgroundColor="Transparent"/>
 
-                <ScrollView>
-                <StackLayout Spacing="5" Padding="5">
-                    <Grid
+                </Grid>
+
+                <Grid x:Name="FightUI">
+                    <Button Grid.Column="0" x:Name="Fight"  Text="Fight" BackgroundColor="Gray"
+                        TextColor="Red" FontSize="25"
+                    Clicked="OnFight_Clicked" IsEnabled="{Binding fightBool}"/>
+
+
+                    <!--<ScrollView >-->
+                    <!--<StackLayout Grid.Column="1" Spacing="5" Padding="5" BackgroundColor="AntiqueWhite">
+                        <Grid
                         RowSpacing="1"
                         ColumnSpacing="2"
                         VerticalOptions="Center"
                         HeightRequest="300">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="175"/>
-                        </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="175"/>
+                            </Grid.ColumnDefinitions>
 
-                        <StackLayout Grid.Row="0" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="2">
-                            <ListView x:Name="CharacterListView"
+                            --><!--<StackLayout Grid.Row="0" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="2">
+                                <ListView x:Name="CharacterListView" 
                       ItemsSource="{Binding DatasetCharacter}"
                       VerticalOptions="Start"
                       RefreshCommand="{Binding LoadItemsCommand}"
@@ -67,36 +79,36 @@
                       IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                       CachingStrategy="RecycleElement"
                       ItemSelected="ItemSelected">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <ViewCell>
-                                            <StackLayout Padding="2">
-                                                <StackLayout Grid.Row= "1" Orientation="Horizontal">
-                                                    <Label Text="Name:" FontSize="10" />
-                                                    <Label Text="{Binding Name}" 
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <StackLayout Padding="2">
+                                                    <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                                                        <Label Text="Name:" FontSize="10" />
+                                                        <Label Text="{Binding Name}" 
                                          LineBreakMode="CharacterWrap" 
                                          Style="{DynamicResource ListItemTextStyle}" 
                                          FontSize="10" />
-                                                </StackLayout>
+                                                    </StackLayout>
 
-                                                <StackLayout Grid.Row= "1" Orientation="Horizontal">
-                                                    <Label Text="Level:" FontSize="10" />
-                                                    <Label Text="{Binding Level}" 
+                                                    <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                                                        <Label Text="Level:" FontSize="10" />
+                                                        <Label Text="{Binding Level}" 
                                          LineBreakMode="CharacterWrap"
                                          Style="{DynamicResource ListItemDetailTextStyle}"
                                          FontSize="10" />
 
+                                                    </StackLayout>
                                                 </StackLayout>
-                                            </StackLayout>
-                                        </ViewCell>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
 
-                        </StackLayout>
-                        <StackLayout Grid.Row="0" Grid.Column="1"  Grid.RowSpan="6" Grid.ColumnSpan="2">
+                            </StackLayout>-->
+                            <!--<StackLayout Grid.Row="0" Grid.Column="1"  Grid.RowSpan="6" Grid.ColumnSpan="2">
 
-                            <ListView x:Name="MonsterListView"
+                                <ListView x:Name="MonsterListView"
                       ItemsSource="{Binding DatasetMonster}"
                       VerticalOptions="Start"
                       RefreshCommand="{Binding LoadItemsCommand}"
@@ -105,41 +117,41 @@
                        IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                       CachingStrategy="RecycleElement"
                       ItemSelected="OnItemSelected">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <ViewCell>
-                                            <StackLayout Padding="2">
-                                                <StackLayout Grid.Row= "1" Orientation="Horizontal">
-                                                    <Label Text="Name:" FontSize="10" />
-                                                    <Label Text="{Binding Name}" 
-                                LineBreakMode="CharacterWrap" 
-                                Style="{DynamicResource ListItemTextStyle}" 
-                                FontSize="10" />
-                                                </StackLayout>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <StackLayout Padding="2">
+                                                    <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                                                        <Label Text="Name:" FontSize="10" />
+                                                        <Label Text="{Binding Name}" 
+                                                        LineBreakMode="CharacterWrap" 
+                                                        Style="{DynamicResource ListItemTextStyle}" 
+                                                        FontSize="10" />        
+                                                    </StackLayout>
 
-                                                <StackLayout Grid.Row= "1" Orientation="Horizontal">
-                                                    <Label Text="Level:" FontSize="10" />
-                                                    <Label Text="{Binding Level}" 
+                                                    <StackLayout Grid.Row= "1" Orientation="Horizontal">
+                                                        <Label Text="Level:" FontSize="10" />
+                                                        <Label Text="{Binding Level}" 
                                 LineBreakMode="CharacterWrap"
                                 Style="{DynamicResource ListItemDetailTextStyle}"
                                 FontSize="10" />
 
+                                                    </StackLayout>
                                                 </StackLayout>
-                                            </StackLayout>
-                                        </ViewCell>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
 
-                        </StackLayout>
+                            </StackLayout>--><!--
 
+                        </Grid>
+                    </StackLayout>-->
                 </Grid>
-        </StackLayout>
-                </ScrollView>
-                <AbsoluteLayout>
-                    <Label x:Name="Output" TextColor="#FF0000" Text="" IsVisible="false" HorizontalOptions="Center" VerticalOptions="Center" FontSize="16"  />
-                </AbsoluteLayout>
+                <!--</ScrollView>-->
+
             </StackLayout>
+        
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

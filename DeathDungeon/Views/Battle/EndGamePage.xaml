@@ -1,12 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DeathDungeon.Views.EndGamePage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="End Game Page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+             x:Class="DeathDungeon.Views.EndGamePage"
+             Title="{Binding Title}">
+
+
+    
+    <ScrollView>
+
+        <StackLayout Spacing="20" Padding="15">
+           
+            <Label Text="GAME OVER" TextColor="Red" HorizontalOptions="Center" FontSize="Large" />
+
+            <Label Text="Enter Your Name" FontSize="Medium" />
+            <Entry Text="{Binding Data.Name}" FontSize="Medium"/>
+            
+            <Button Text="CONFIRM" Clicked="Menu_Clicked"></Button>
+            
+            <Label Text="Rounds: " FontSize="Medium" />
+            <Label Text="{Binding Data.Round}" FontSize="Small"/>
+    
+            <Label Text="Score:" FontSize="Medium" />
+            <Label Text="{Binding Data.ExperienceGainedTotal}" FontSize="Small"/>
+            <Label Text="Number of Turns:" FontSize="Medium" />
+            <Label Text="{Binding Data.Turn}" FontSize="Small"/>
+
+            <Label Text="Number of Monsters Slain:" FontSize="Medium" />
+            <Label Text="{Binding Data.MonsterSlainNumber}" FontSize="Small"/>
+
+            <Label Text="Total Experience Gained:" FontSize="Medium" />
+            <Label Text="{Binding Data.ExperienceGainedTotal}" FontSize="Small"/>
+
+            <Label Text="Game Date:" FontSize="Medium" />
+            <Label Text="{Binding Data.GameDate}" FontSize="Small"/>
+
+            <Label Text="AutoBattle:" FontSize="Medium" />
+            <Label Text="{Binding Data.AutoBattle}" FontSize="Small"/>
+
+            <Label Text="Items Dropped:" FontSize="Medium" />
+            <Label Text="{Binding Data.ItemsDroppedList}" FontSize="Small"/>
+
+            <Label Text="Monsters Killed:" FontSize="Medium" />
+            <Label Text="{Binding Data.MonstersKilledList}" FontSize="Small"/>
+
+            <Label Text="Characters Killed:" FontSize="Medium" />
+            <Label Text="{Binding Data.CharacterAtDeathList}" FontSize="Small"/>
+
+
         </StackLayout>
-    </ContentPage.Content>
+    </ScrollView>
 </ContentPage>

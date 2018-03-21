@@ -8,32 +8,13 @@
             HorizontalOptions="Center" 
             VerticalOptions="Start">
 
-            <Label 
-                Margin="40,40,0,40" 
-                FontSize="10"
-                Text="Welcome to Death Dungeon"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-
             <Image 
-                Source="d20.png" 
-                VerticalOptions="Center" 
-                HeightRequest="40"
-                HorizontalOptions="Fill"/>
+            Source="DeathDungeon.png" 
+               
+            VerticalOptions="Center" 
+            HeightRequest="150"
+            HorizontalOptions="Fill"/>
 
-            <!--<Button Margin="0,10,0,0" 
-                    Text="User Battle" 
-                    Command="{Binding UserBattleCommand}" 
-                    BackgroundColor="{StaticResource Primary}" 
-                    HorizontalOptions="Center"
-                    TextColor="White" />
-
-            <Button Margin="0,10,0,0" 
-                    Text="Auto Battle" 
-                    Command="{Binding AutoBattleCommand}" 
-                    HorizontalOptions="Center"
-                    TextColor="White" />
-            -->
             <Button 
                 Text="Battle"
                 Clicked="UserBattle_Clicked"
@@ -44,6 +25,7 @@
                 Clicked="AutoBattle_Clicked"
                 HorizontalOptions="Center"
                 TextColor="Black"/>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

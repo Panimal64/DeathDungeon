@@ -18,7 +18,7 @@ namespace DeathDungeon.Views
             InitializeComponent();
             BindingContext = _viewModel = ScoresViewModel.Instance;
         }
-
+        //selcts item
         private async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
             var data = args.SelectedItem as Score;
@@ -30,16 +30,13 @@ namespace DeathDungeon.Views
             // Manually deselect item.
             ItemsListView.SelectedItem = null;
         }
-
+        //add item
         private async void AddItem_Clicked(object sender, EventArgs e)
         {
-            // Bug in the Score page for lecture
-            // await Navigation.PushAsync(new NewItemPage());
-
-
+            
             await Navigation.PushAsync(new NewScorePage());
         }
-
+        //on appear
         protected override void OnAppearing()
         {
             base.OnAppearing();

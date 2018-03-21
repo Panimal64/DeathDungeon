@@ -1,8 +1,13 @@
-﻿using System;
+using DeathDungeon.Models;
+using DeathDungeon.ViewModels;
+using DeathDungeon.Views;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 using DeathDungeon.ViewModels;
 using DeathDungeon.Models;
@@ -18,8 +23,9 @@ namespace DeathDungeon.Views
     public partial class BattlePage : ContentPage
     {
 
-
         private BattleViewModel _viewModel;
+
+        private string message;
         //private BattleClass battleInstance;
 
         public BattlePage()
@@ -28,212 +34,330 @@ namespace DeathDungeon.Views
 
             BindingContext = _viewModel = BattleViewModel.Instance;
 
+
         }
 
-        public async void Refresh_Clicked(object sender, SelectedItemChangedEventArgs args)
+
+        public BattlePage(List<string> characterList)
         {
 
+            InitializeComponent();
+
+            BindingContext = _viewModel = BattleViewModel.Instance;
+
+            _viewModel.PartyList = characterList;
             _viewModel.SetNeedsRefresh(true);
         }
-
-        //On SELECTED ITEMS_____________________________________________________
-        public async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
+        //____________________SELECTED ITEMS_______________________________________________________
+        //Fight button click
+        public async void OnFight_Clicked(object sender, SelectedItemChangedEventArgs args)
         {
-            var data = args.SelectedItem as Monster;
-            if (data == null)
+
+            message = _viewModel.FightClicked();
+
+            if (message == "EndGame")
             {
-                return;
+                _viewModel.battleInstance.EndGame();
+                var data = new ScoreDetailViewModel(_viewModel.battleInstance.score);
+                await Navigation.PushModalAsync(new EndGamePage(data));
             }
-            var answer = await DisplayAlert("Fight", "Battle Ready?", "Yes", "No");
-            if (answer)
+            else if (message == "EndRound") //finish round
             {
-                // Call to the Item Service and have it Get the Items
-                //ItemsController.Instance.GetItemsFromServer();
-                //BattleClass.Instance.
-                _viewModel.DatasetTurnMonster = data;
+                var data = new ScoreDetailViewModel(_viewModel.battleInstance.score);
+                await Navigation.PushModalAsync(new EndRoundPage(data));
+                //or send to items page
+                return;
 
             }
-            //await Navigation.PushAsync(new MonsterDetailPage(new MonstersDetailViewModel(data)));
-            await DisplayAlert("Fight", _viewModel.DatasetTurnMonster.Name, "Yes", "No");
-            // Manually deselect item.
-            MonsterListView.SelectedItem = null;
+            else if (message == "reload") //reload
+            {
+
+                reloadEntities();
+            }
+            OutputCharacter.Text = _viewModel.checkCharacterMessage(); //check if monster or character message appeared
+            OutputMonster.Text = _viewModel.checkMonsterMessage();
+
+            string checker = _viewModel.entityCheck();
+            if (checker == "EndGame") //endgame case
+            {
+                var data = new ScoreDetailViewModel(_viewModel.battleInstance.score);
+                await Navigation.PushModalAsync(new EndGamePage(data));
+            }
+            else if (checker == "refresh") //reload round
+            {
+                
+                await Navigation.PushModalAsync(new ItemDropPage(_viewModel.Pool));
+                RoundRefreshPage();
+            }
+
         }
 
-        public async void ItemSelected(object sender, SelectedItemChangedEventArgs args)
+
+        //_____________GRID___________________________________________________
+        //Setup play grid
+        public void GridSetup()
         {
-            var data = args.SelectedItem as Character;
-            if (data == null)
-            {
-                return;
-            }
+            #region first populate grid commnads
+            //ADJUSTING OR POPULATING GRID
+            populateGrid();
 
-            //await Navigation.PushAsync(new CharacterDetailPage(new CharacterDetailViewModel(data)));
-            var answer = await DisplayAlert("Fight", "Battle Ready?", "Yes", "No");
-            if (answer)
-            {
-                // Call to the Item Service and have it Get the Items
-                //ItemsController.Instance.GetItemsFromServer();
-                //BattleClass.Instance.
-                _viewModel.DatasetTurnCharacter = data;
+            insertMonster();//test cyclops entry
+            insertGrid();
+            //insertGrid();//test grid
+            _viewModel.battleInstance.ResetTurns();
+            _viewModel.battleInstance.LoadTurnOrder();
 
-            }
 
-            await DisplayAlert("Fight", _viewModel.DatasetTurnCharacter.Name, "Yes", "No");
-
-            // Manually deselect item.
-            CharacterListView.SelectedItem = null;
+            #endregion
         }
-        //Buttons---------------------------------------------------------
-        //Start Fight BUTTON func
-        public async void CharacterFight_Clicked(object sender, SelectedItemChangedEventArgs args)
+
+        #region commands
+
+
+
+        #endregion
+        #region population of grid
+        //Populate grid
+        public void populateGrid()
         {
+            if (_viewModel.DatasetCharacter.Count == 0)
+            {
+                Debug.WriteLine("Dataset not populated");
+                throw new System.ArgumentException("Please Check SQL", "original");
+            }
+            else
+            {
+                _viewModel.battleInstance.TurnCharacter = _viewModel.battleInstance.ListCharacters[0];
+                for (int i = 0; i < 2; i++) ///should edit/WHY IS THIS STAYING
+                {
+                    for (int j = 0; j < _viewModel.battleInstance.ListCharacters.Count; j++)
+                    {
+
+                        if (i == 0)
+                        {
+                            string CharacterImg = _viewModel.battleInstance.ListCharacters.ElementAt(j).EntityImage;
+
+                            _viewModel.battleInstance.ListCharacters.ElementAt(j).X = i;//set x
+                            _viewModel.battleInstance.ListCharacters.ElementAt(j).Y = j;//set y
+
+                            Image Box = new Image { Source = CharacterImg, BackgroundColor = Xamarin.Forms.Color.Transparent }; //will replace with image of box
+                            Grid.SetRow(Box, j);
+                            Grid.SetColumn(Box, i);
+                            this.ContentPanel.Children.Add(Box);
+                        }
+
+
+                    }
+                }
+            }
+
+        }
+
+        //insert monster's into grid
+        public void insertMonster()
+        {
+            if (_viewModel.DatasetCharacter.Count == 0)
+            {
+                Debug.WriteLine("Dataset not populated");
+                throw new System.ArgumentException("Please Check SQL", "original");
+            } //prevent load if no characters
+
+            //todo switch to highest speed on queue
+            _viewModel.battleInstance.TurnMonster = _viewModel.battleInstance.ListMonsters[0];
+
+            for (int i = 0; i < 2; i++) ///should edit/WHY IS THIS STAYING
+            {
+                for (int j = 0; j < _viewModel.battleInstance.ListMonsters.Count; j++)
+                {
+
+                    if (i == 1)
+                    {
+                        string MonsterImg = _viewModel.battleInstance.ListMonsters.ElementAt(j).EntityImage;
+                        _viewModel.battleInstance.ListMonsters.ElementAt(j).X = i;//set x
+                        _viewModel.battleInstance.ListMonsters.ElementAt(j).Y = j;//set y
+
+
+                        Image Box = new Image { Source = MonsterImg, BackgroundColor = Xamarin.Forms.Color.Transparent }; //will replace with image of box
+                        Grid.SetRow(Box, j);
+                        Grid.SetColumn(Box, i);
+                        this.ContentPanel.Children.Add(Box);
+                    }
+
+
+                }
+            }
+        }
+
+
+        //reload entire page character/ monstersr4
+        public void reloadEntities()
+        {
+            ClearBattlePage();
+            SetBackground();
+
+            if (_viewModel.battleInstance.ListCharacters.Count != 0 && _viewModel.battleInstance.ListMonsters.Count != 0)
+            {
+
+                for (int i = 0; i < 2; i++) ///should edit/WHY IS THIS STAYING
+                {
+                    for (int j = 0; j < _viewModel.battleInstance.ListCharacters.Count; j++)
+                    {
+                        if (_viewModel.battleInstance.ListCharacters.ElementAt(j).IsLiving())
+                        {
+                            string characterImg = _viewModel.battleInstance.ListCharacters.ElementAt(j).EntityImage;
+                            int xcoord = _viewModel.battleInstance.ListCharacters.ElementAt(j).X;
+                            int ycoord = _viewModel.battleInstance.ListCharacters.ElementAt(j).Y;
+
+
+                            Image Box = new Image { Source = characterImg }; //will replace with image of box
+                            Grid.SetRow(Box, ycoord);
+                            Grid.SetColumn(Box, xcoord);
+                            this.ContentPanel.Children.Add(Box);
+
+                            //L
+
+                        }
+
+                    }
+                }
+                for (int i = 0; i < 2; i++) ///should edit/WHY IS THIS STAYING
+                {
+                    for (int j = 0; j < _viewModel.battleInstance.ListMonsters.Count; j++)
+                    {
+
+                        if (_viewModel.battleInstance.ListMonsters.ElementAt(j).IsLiving())
+                        {
+                            string MonsterImg = _viewModel.battleInstance.ListMonsters.ElementAt(j).EntityImage;
+                            int xcoord = _viewModel.battleInstance.ListMonsters.ElementAt(j).X;
+                            int ycoord = _viewModel.battleInstance.ListMonsters.ElementAt(j).Y;
+
+
+                            Image Box = new Image { Source = MonsterImg, }; //will replace with image of box
+                            Grid.SetRow(Box, ycoord);
+                            Grid.SetColumn(Box, xcoord);
+                            this.ContentPanel.Children.Add(Box);
+                        }
+                    }
+                }
+                insertGrid();
+
+            }
+
+
+        }
+
+        #endregion
+        #region ui filler
+       
+        //clear battle gird
+        public void ClearBattlePage()
+        {
+            this.ContentPanel.Children.Clear();
+        }
+        //set background
+        public void SetBackground()
+        {
+            Image Box = new Image
+            {
+                Source = "DungeonCave.jpg",
+                HorizontalOptions = Xamarin.Forms.LayoutOptions.Fill,
+                VerticalOptions = Xamarin.Forms.LayoutOptions.Fill,
+                Aspect = Xamarin.Forms.Aspect.Fill
+            };
+            Grid.SetColumn(Box, 0);
+            Grid.SetColumnSpan(Box, 2);
+            Grid.SetRow(Box, 0);
+            Grid.SetRowSpan(Box, 6);
+
+            this.ContentPanel.Children.Add(Box);
+        }
+        //refresh the entire page
+        public async void RoundRefreshPage() //REFRESH After Round
+        {
+            if (_viewModel.battleInstance.ListCharacters.Count <= 0)
+            {
+                _viewModel.battleInstance.EndGame();
+                var data = new ScoreDetailViewModel(_viewModel.battleInstance.score);
+                Debug.WriteLine("here is experience sent to page" + data.Data.ExperienceGainedTotal);
+                Debug.WriteLine("here is the turns sent to page" + data.Data.Turn);
+                await Navigation.PushModalAsync(new EndGamePage(data));
+            }
             
-            if (_viewModel.DatasetCharacter.Count <= 0 || _viewModel.DatasetMonster.Count <= 0)
-            {
-                if (_viewModel.DatasetCharacter.Count <= 0)
-                {
-                    _viewModel.battleInstance.EndGame();
+            //clear battlepage
+            ClearBattlePage();
+            // reload map
+            SetBackground();
+            //Updated Message
+            OutputMonster.Text = _viewModel.checkMonsterMessage();
+            OutputCharacter.Text = _viewModel.checkCharacterMessage();
+            //new 6 monster rewspawn
+            _viewModel.refreshMonster();
 
-                    await Navigation.PushAsync(new EndGamePage());
-                }
-                else 
-                {
-                    _viewModel.battleInstance.EndRound();
-                    await Navigation.PushAsync(new EndRoundPage());
-
-
-                }
-
-            }
-            else if (_viewModel.DatasetTurnCharacter == null || _viewModel.DatasetTurnMonster == null)
-            {
-                if (_viewModel.DatasetTurnCharacter == null)
-                {
-                    
-                    _viewModel.DatasetTurnCharacter = _viewModel.DatasetCharacter[0];
-                    
-                }
-                if (_viewModel.DatasetTurnMonster == null)
-                {
-                    
-                    _viewModel.DatasetTurnMonster = _viewModel.DatasetMonster[0];
-                    
-                }
-                _viewModel.battleInstance.CharacterAttacks(_viewModel.DatasetTurnCharacter, _viewModel.DatasetTurnMonster);
-
-
-            }
-            else
-            {
-                _viewModel.battleInstance.CharacterAttacks(_viewModel.DatasetTurnCharacter, _viewModel.DatasetTurnMonster);
-            }
-
-
-            //await DisplayAlert("Character Attacks", _viewModel.DatasetTurnMonster.Name, "Ok");
-            //Output.Text = ("Character Attacks " + _viewModel.DatasetTurnMonster.Name);
-            //Output.IsVisible = true;
-
-            if (_viewModel.DatasetTurnCharacter != null && _viewModel.DatasetTurnMonster != null)
-            {
-                if (_viewModel.DatasetTurnMonster.IsLiving())
-                {
-                    Output.Text = (_viewModel.DatasetTurnCharacter.Name + " attacks " + _viewModel.DatasetTurnMonster.Name + " HP Remaining: " + _viewModel.DatasetTurnMonster.CurrentHealth);
-                    Output.IsVisible = true;
-
-                    //await DisplayAlert("Monster:", _viewModel.DatasetTurnMonster.Name
-                    //+ " has " + _viewModel.DatasetTurnMonster.CurrentHealth + "HP"
-                    //                   , "Ok");
-                }
-                else
-                {
-                    Output.Text = (_viewModel.DatasetTurnCharacter.Name + " attacks " + _viewModel.DatasetTurnMonster.Name + " Monster Died");
-                    Output.IsVisible = true;
-
-                    //await DisplayAlert("Monster:", _viewModel.DatasetTurnMonster.Name
-                    //+ " has died", "Ok");
-
-                    //make this a quick function
-                    MessagingCenter.Send(this, "DeleteDataMonster", _viewModel.DatasetTurnMonster);
-                    _viewModel.DatasetTurnMonster = null;
-
-                }
-            }
+            //reload current players in DatasetCharacter
+            populateGrid();
+            //load new monsters
+            insertMonster();
+            insertGrid();
+            //calls for ew loading of monster turns
+            _viewModel.battleInstance.LoadTurnOrder();
+            _viewModel.battleInstance.numberMonsterDead = 0;
+            _viewModel.battleInstance.checkTurns();
+            //Update Rest of UI
+            RoundNum.Text = _viewModel.getRound();
+            Debug.WriteLine("Round " + _viewModel.getRound());
 
         }
-
-        public async void MonsterFight_Clicked(object sender, SelectedItemChangedEventArgs args)
+        //Button Selected_______________________________________________________
+        //on select choose monster
+        public async void SelectedBox(object sender, EventArgs args)
         {
-            if (_viewModel.DatasetCharacter.Count <= 0 || _viewModel.DatasetMonster.Count <= 0)
+            reloadEntities();
+            //var answer = await DisplayAlert("Fight", "Battle Ready?", "Yes", "No");
+            Button getter = (Button)sender;
+            Monster getMonster = _viewModel.DatasetMonster.FirstOrDefault(a => a.Y.ToString() == getter.ClassId); //a.X == getter.X &&
+            if (getMonster != null)
             {
-                if (_viewModel.DatasetCharacter.Count <= 0)
-                {
-                    _viewModel.battleInstance.EndGame();
-
-                    await Navigation.PushAsync(new EndGamePage());
-                }
-                else
-                {
-                    _viewModel.battleInstance.EndRound();
-                    await Navigation.PushAsync(new EndRoundPage());
-
-
-                }
-
-            }
-            else if (_viewModel.DatasetTurnCharacter == null || _viewModel.DatasetTurnMonster == null)
-            {
-                if (_viewModel.DatasetTurnCharacter == null)
-                {
-
-                    _viewModel.DatasetTurnCharacter = _viewModel.DatasetCharacter[0];
-
-                }
-                if (_viewModel.DatasetTurnMonster == null)
-                {
-
-                    _viewModel.DatasetTurnMonster = _viewModel.DatasetMonster[0];
-
-                }
-                _viewModel.battleInstance.MonsterAttacks(_viewModel.DatasetTurnCharacter, _viewModel.DatasetTurnMonster);
-
+                getter.BackgroundColor = Xamarin.Forms.Color.Red;
+                _viewModel.battleInstance.TurnMonster = getMonster;
+                Debug.WriteLineIf(getMonster == null, " empty Monster in Selected box");
+                var answer = await DisplayAlert("Fight", getMonster.Name + " ", "Yes", "No");
             }
             else
             {
-                _viewModel.battleInstance.MonsterAttacks(_viewModel.DatasetTurnCharacter, _viewModel.DatasetTurnMonster);
+                var answer = DisplayAlert("Empty", "Select a Monster ", "ok");
             }
 
-
-            //await DisplayAlert("Fight", _viewModel.DatasetTurnMonster.Name + " " + _viewModel.DatasetTurnCharacter.Name, "Yes", "No");
-
-            // _viewModel.battleInstance.MonsterAttacks(_viewModel.DatasetTurnCharacter, _viewModel.DatasetTurnMonster);
-            //await DisplayAlert("Monster Attacks", _viewModel.DatasetTurnCharacter.Name, "Ok");
-            if (_viewModel.DatasetTurnCharacter != null && _viewModel.DatasetTurnMonster != null)
-            {
-                if (_viewModel.DatasetTurnCharacter.IsLiving())
-                {
-                    Output.Text = (_viewModel.DatasetTurnMonster.Name + " attacks " + _viewModel.DatasetTurnCharacter.Name + " HP Remaining: " + _viewModel.DatasetTurnCharacter.CurrentHealth);
-                    Output.IsVisible = true;
-
-                    //await DisplayAlert("Character:", _viewModel.DatasetTurnCharacter.Name
-                    //+ " has " + _viewModel.DatasetTurnCharacter.CurrentHealth + "HP"
-                    //                   , "Ok");
-                }
-                else
-                {
-                    Output.Text = (_viewModel.DatasetTurnMonster.Name + " attacks " + _viewModel.DatasetTurnCharacter.Name + " Character Died");
-                    Output.IsVisible = true;
-
-                    //await DisplayAlert("Character:", _viewModel.DatasetTurnCharacter.Name
-                    //+ " has died", "Ok");
-
-                    //make this a quick function
-                    MessagingCenter.Send(this, "DeleteDataCharacter", _viewModel.DatasetTurnCharacter);
-                    _viewModel.DatasetTurnCharacter = null;
-                }
-            }
         }
 
-        //Page Setting---------------------------------------------------------
+        //Buttons for pressing_______________________________________________________
+        //places grid 
+        public void insertGrid()
+        {
+
+            for (int i = 0; i < 2; i++) ///should edit/WHY IS THIS STAYING
+            {
+                for (int j = 0; j < 6; j++)
+                {
+                    {
+                        if (i == 1)
+                        {
+                            Button button = new Button();
+                            button.HorizontalOptions = Xamarin.Forms.LayoutOptions.Fill;
+                            button.VerticalOptions = LayoutOptions.Fill;
+                            button.ClassId = j.ToString();
+                            button.Clicked += new EventHandler(SelectedBox);
+                            //button.BackgroundColor = Color.Transparent;
+                            Grid.SetRow(button, j);
+                            Grid.SetColumn(button, i);
+                            this.ContentPanel.Children.Add(button);
+                        }
+                    }
+                }
+            }
+
+            #endregion
+        }
+        //____________________________________________________
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -247,86 +371,23 @@ namespace DeathDungeon.Views
 
             InitializeComponent();
 
-            if (_viewModel.DatasetMonster.Count == 0 || _viewModel.DatasetCharacter.Count == 0)
+            //LOAD datasets
+            if (_viewModel.getRound() == "1")
             {
-                _viewModel.LoadDataCommand.Execute(null);
-            }
-            else if (_viewModel.NeedsRefresh())
-            {
-                _viewModel.LoadDataCommand.Execute(null);
-            }
+                if (_viewModel.DatasetMonster.Count == 0 || _viewModel.DatasetCharacter.Count == 0)
+                {
+                    _viewModel.LoadDataCommand.Execute(null);
 
+                }
+                else if (_viewModel.NeedsRefresh())
+                {
+                    _viewModel.LoadDataCommand.Execute(null);
+                }
+            }
             BindingContext = _viewModel;
-            //ADJUSTING OR POPULATING GRID
-            populateGrid();
-            insertGuy();//test cyclops entry
-            insertGrid();//test grid
-        }
+            RoundNum.Text = _viewModel.getRound(); //text for round
+            GridSetup();
 
-        //
-        public void populateGrid()
-        {
-        for (int i = 0; i< 2; i++) ///should edit/WHY IS THIS STAYING
-            {
-                for (int j = 0; j< 6; j++)
-                {
-                    Image Box = new Image { Source = "wizard.png" }; //will replace with image of box
-                    Grid.SetRow(Box, j);
-                    Grid.SetColumn(Box, i);
-                    this.ContentPanel.Children.Add(Box);
-                }
-            }   
-        }
-        //test for button_______________________________________________________
-
-        public void insertGrid()
-        {
-            
-            for (int i = 0; i < 2; i++) ///should edit/WHY IS THIS STAYING
-            {
-                for (int j = 0; j < 6; j++)
-                {
-                    Button button = new Button();
-                    //button.BackgroundColor = Color.Transparent;
-                    Grid.SetRow(button, j);
-                    Grid.SetColumn(button, i);
-                    this.ContentPanel.Children.Add(button);
-                }
-            }
-        }
-        //TEST Insert Character_________________________________________________
-
-        public void insertGuy()
-        {
-            for (int i = 0; i < 2; i++) ///should edit/WHY IS THIS STAYING
-            {
-                for (int j = 0; j < 6; j++)
-                {
-                    if (i == 1)
-                    {
-                        Image Box = new Image { Source = "cyclops.png" }; //will replace with image of box
-                                                                          //var child = this.ContentPanel.Children.Remove
-                                                                          // this.ContentPanel.Children.Remove(child);
-                        //REMOVING CHILD
-                        for (int k = 0; k < this.ContentPanel.Children.Count(); k++)
-                        {
-                            var child = this.ContentPanel.Children[k];
-                            if (Grid.GetRow(child) == j
-                            &&
-                            Grid.GetColumn(child) == i)
-                            {
-                                this.ContentPanel.Children.RemoveAt(k);
-                            }
-                        }
-
-                        Grid.SetRow(Box, j);
-                        Grid.SetColumn(Box, i);
-                        this.ContentPanel.Children.Add(Box);
-                    }
-                }
-            }
         }
     }
-
-
 }

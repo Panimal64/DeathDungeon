@@ -1,12 +1,138 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DeathDungeon.Views.ItemDropPage">
+             x:Class="DeathDungeon.Views.ItemDropPage"
+               xmlns:local="using:DeathDungeon.Models"
+             Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:StringEnumConverter x:Key="StringEnum"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Item Drop Page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ScrollView>
+            <StackLayout Spacing="20" Padding="15">
+                <Grid
+                     RowSpacing="1"
+                    ColumnSpacing="2"
+                    VerticalOptions="Center">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackLayout Grid.Row="0" Grid.Column="0">
+                        <Label Text="Characters" 
+                            FontSize="Medium" 
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"/>
+
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="0" Grid.Column="1">
+
+                        <Picker Title="Select Character" 
+                            ItemsSource="{Binding DatasetCharacter}"
+                            ItemDisplayBinding="{Binding Name}"
+                            SelectedItem="{Binding CharacterSelected, Mode=TwoWay}" 
+                            SelectedIndexChanged="OnCharacterChosen"
+                            VerticalOptions="Center"
+                            x:Name="CharacterPicker"/>
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="1" Grid.Column="0">
+                        <Label Text="Location" 
+                            FontSize="Medium" 
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"/>
+
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="1" Grid.Column="1">
+                        
+                        <Picker Title="Select Location" 
+                            
+                            ItemsSource="{x:Static local:ItemLocationList.GetListCharacter}"
+                            IsEnabled="False"
+                            SelectedIndexChanged="OnLocChosen"
+                            x:Name="LocationPicker"
+                                 
+                            VerticalOptions="Center"/>
+
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="2" Grid.Column="0">
+                       
+                        <Label
+                        Text="Item:   " 
+                            FontSize="Medium" 
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"/>
+
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="2" Grid.Column="1">
+                        <Picker Title="Location Specific Items" 
+                            IsEnabled="False"
+                            SelectedItem="{Binding ItemSelected, Mode=TwoWay}"   
+                            ItemDisplayBinding="{Binding Name}"
+                            x:Name="rolePicker"
+                            SelectedIndexChanged="OnItemChosen"    
+                            VerticalOptions="Center"/>
+                        
+                    </StackLayout>
+
+                </Grid>
+                <Label Text="Current weapon at location:"
+                        FontSize="Small" 
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"/>
+                <Label  x:Name="CurrentItem"
+                        FontSize="Small" 
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center" />
+                 <Button  
+                    x:Name="RemoveItem"
+                    Text="RemoveItem" 
+                    Clicked="RemoveItems_Command" 
+                    HorizontalOptions="Center"
+                    TextColor="Black"
+                    IsEnabled="False"/>
+                
+                <Picker Title="Item Pool" 
+                            ItemsSource="{Binding Dataset}"
+                            ItemDisplayBinding="{Binding Name}"
+                            SelectedItem="{Binding PoolSelected, Mode=TwoWay}"
+                            x:Name="ItemPicker"
+                            VerticalOptions="Center"/>
+               
+                <Label Text="{Binding PoolSelected.Description}"  FontSize="Small" 
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center" />
+               
+                <Label Text="{Binding PoolSelected.Location}"  FontSize="Small" 
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"/>
+               
+                <Label Text="{Binding PoolSelected.Attribute}"  FontSize="Small" 
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"/>
+               
+                <Label Text="{Binding PoolSelected.Value}"  FontSize="Small" 
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"/>
+
+                <Button Text="Back" Clicked="Back_Clicked" />
+
+
+            </StackLayout>
+            
+        </ScrollView>
+        
     </ContentPage.Content>
 </ContentPage>

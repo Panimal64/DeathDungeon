@@ -104,6 +104,7 @@
                 </StackLayout>
 
             </Grid>
+            <Button  Text="Confirm" Clicked="Continue_Clicked"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

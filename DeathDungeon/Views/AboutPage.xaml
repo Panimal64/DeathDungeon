@@ -9,7 +9,7 @@
     <ContentPage.BindingContext>
         <vm:AboutViewModel />
     </ContentPage.BindingContext>
-
+    <ScrollView>
     <StackLayout
         Orientation="Vertical">
 
@@ -44,6 +44,8 @@
             HorizontalOptions="CenterAndExpand" />
         </StackLayout>
 
+        
+
         <StackLayout 
                 VerticalOptions="EndAndExpand"
                 HorizontalOptions="StartAndExpand" 
@@ -53,75 +55,157 @@
             <StackLayout
                 HorizontalOptions="Start"
                 Orientation="Horizontal">
+                
+                <Label 
+                FontSize="Small"
+                Text="Enter Debug Mode"
+                HorizontalTextAlignment="Start"
+                HorizontalOptions="Start"
+                />
+                
+                <Switch x:Name="start_debug" Toggled="StartDebug" />
+               
+
+            </StackLayout>
+
+            <StackLayout x:Name="SQLText"
+                HorizontalOptions="Start"
+                Orientation="Horizontal">
 
                 <Label 
                 FontSize="Small"
                 Text="Use SQL DataStore"
                 HorizontalTextAlignment="Start"
                 HorizontalOptions="Start"
+                IsVisible="{Binding SQLText}"
                 />
-
-                <Switch 
-                x:Name="SettingDataSource"
-                HorizontalOptions="Center"
-                Toggled="Switch_OnToggled"/>
-
+                
+                <Switch x:Name="SettingDataSource" 
+                HorizontalOptions="Center" 
+                Toggled="Switch_OnToggled" 
+                IsVisible="false" />
             </StackLayout>
 
             <StackLayout
                 HorizontalOptions="Start"
                 Orientation="Horizontal">
 
-                <Label 
-                FontSize="Small"
-                Text="Retrieve items from online "
-                    HorizontalTextAlignment="Start"
-                    HorizontalOptions="Start"
-                />
-
+                
                 <Button  
-                    Text="Get" 
+                    x:Name="Get_Items"
+                    Text="GET Server Items" 
                     Clicked="GetItems_Command" 
                     HorizontalOptions="Center"
-                    TextColor="Black" />
-            </StackLayout>
-
-            <StackLayout
-                HorizontalOptions="FillAndExpand"
-                Orientation="Horizontal">
-
-                <Label 
-                    FontSize="Small"
-                    Text="Server POST Items"
-                    HorizontalTextAlignment="Start"
-                    HorizontalOptions="Start"/>
-
-                <Button  
-                    Text="Get" 
-                    Clicked="GetItemsPost_Command" 
-                    HorizontalOptions="CenterAndExpand"
-                    TextColor="Black" />
+                    TextColor="Black"
+                    IsVisible="false"/>
+                
             </StackLayout>
 
             <StackLayout
                 HorizontalOptions="Start"
                 Orientation="Horizontal">
 
-                <Label 
-                FontSize="Small"
-                Text="Clear Database"
-                    HorizontalTextAlignment="Start"
-                    HorizontalOptions="Start"
-                />
-
                 <Button  
-                    Text="Clear" 
-                    Clicked="ClearDatabase_Command" 
-                    HorizontalOptions="Center"
-                    TextColor="Black" />
+                    x:Name="Post_Items"
+                    Text="POST Server Items" 
+                    Clicked="GetItemsPost_Command" 
+                    HorizontalOptions="CenterAndExpand"
+                    TextColor="Black"
+                    IsVisible="false"/>
             </StackLayout>
 
-            <Grid
+            <StackLayout
+                HorizontalOptions="Start"
+                Orientation="Horizontal">
+
+                <Button  
+                    x:Name="Clear_Database"
+                    Text="Clear Database" 
+                    Clicked="ClearDatabase_Command" 
+                    HorizontalOptions="Center"
+                    TextColor="Black" 
+                    IsVisible="false"/>
+            </StackLayout>
+
+            <StackLayout x:Name="DisableRandomText"
+                HorizontalOptions="Start"
+                Orientation="Horizontal">
+
+                <Label 
+                FontSize="Small"
+                Text="Disable Random Numbers"
+                HorizontalTextAlignment="Start"
+                HorizontalOptions="Start"
+                IsVisible="{Binding DisableRandomText}"
+                />
+
+                <Switch x:Name="Disable_Random_Switch" 
+                HorizontalOptions="Center" 
+                Toggled="NoRandom_OnToggled" 
+                IsVisible="false" />
+            </StackLayout>
+
+            <StackLayout x:Name="MissText"
+                HorizontalOptions="Start"
+                Orientation="Horizontal">
+
+                <Label 
+                FontSize="Small"
+                Text="Enable 1 as Miss"
+                HorizontalTextAlignment="Start"
+                HorizontalOptions="Start"
+                IsVisible="{Binding MissText}"
+                />
+
+                <Switch x:Name="Enable_Miss_Switch" 
+                HorizontalOptions="Center" 
+                Toggled="Miss_OnToggled" 
+                IsVisible="false" />
+            </StackLayout>
+
+            
+            <StackLayout x:Name="CritText"
+                HorizontalOptions="Start"
+                Orientation="Horizontal">
+
+                <Label 
+                FontSize="Small"
+                Text="Enable 20 as Crit"
+                HorizontalTextAlignment="Start"
+                HorizontalOptions="Start"
+                IsVisible="{Binding CritText}"
+                />
+
+                <Switch x:Name="Enable_Crit_Switch" 
+                HorizontalOptions="Center" 
+                Toggled="Crit_OnToggled" 
+                IsVisible="false" />
+            </StackLayout>
+
+            <StackLayout x:Name="SetHitText"
+                HorizontalOptions="Start"
+                Orientation="Horizontal">
+
+                    <Label 
+                FontSize="Small"
+                Text="Enter Hit Value(-1 is default, press Enter after typing value)"
+                HorizontalTextAlignment="Start"
+                HorizontalOptions="Start"
+                IsVisible="{Binding SetHitText}"/>
+
+                <Entry Completed="Hit_Entry" />
+            
+             </StackLayout>
+            
+                <StackLayout x:Name="VolcanoText"
+                HorizontalOptions="Start"
+                Orientation="Horizontal">
+
+                                  
+                </StackLayout>
+
+
+                <Grid
                 RowSpacing="1"
                 ColumnSpacing="2">
                 <Grid.RowDefinitions>
@@ -140,4 +224,5 @@
 
         </StackLayout>
     </StackLayout>
+    </ScrollView>
 </ContentPage>
