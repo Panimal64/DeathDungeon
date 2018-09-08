@@ -109,7 +109,7 @@ The game will consist of the 15 following monsters. Monster will have a given na
 
 
 
-Bats
+	Bats
     	Imp
     	Blob
    	Rabbit
@@ -117,10 +117,10 @@ Bats
 	
     	Bandits
     	Giant
-Lich
+	Lich
 	Stone Golem
 	Wolf
-	
+
 	Dragon
 	Succubus
 	Ghost
